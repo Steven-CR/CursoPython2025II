@@ -1,0 +1,859 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Configurando un entorno de código abierto para procesar datos &#8212; Análisis y procesamiento de datos con Open Source</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modulo_4/modulo_4';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Primeros pasos con pyspark" href="../modulo_5/modulo_5.html" />
+    <link rel="prev" title="Visualización de datos" href="../modulo_3/modulo_3.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/Logo_DANE_2024.png" class="logo__image only-light" alt="Análisis y procesamiento de datos con Open Source - Home"/>
+    <script>document.write(`<img src="../_static/Logo_DANE_2024.png" class="logo__image only-dark" alt="Análisis y procesamiento de datos con Open Source - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Taller de Análisis y procesamiento de datos con Open Source
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Bienvenida</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../modulo_0/modulo_0.html">Presentación del curso</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Introducción a Python y R</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../modulo_1/modulo_1.html">Entornos de desarrollo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modulo_2/modulo_2.html">Un primer código en Python y R</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modulo_3/modulo_3.html">Visualización de datos</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Configurando un entorno de código abierto para procesar datos</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../modulo_5/modulo_5.html">Primeros pasos con pyspark</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/modulo_4/modulo_4.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Configurando un entorno de código abierto para procesar datos</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Configurando un entorno de código abierto para procesar datos</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instrucciones">Instrucciones.</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-de-miniconda-y-python">Instalación de miniconda y python.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-de-r-en-jupyter-lab-desde-anaconda-prompt">Instalación de R en jupyter lab desde anaconda prompt</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-de-pyspark-en-una-maquina-local-en-sistema-operativo-windows">Instalación de PySpark en una máquina local en sistema operativo Windows</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bienvenidos-al-mundo-de-la-mineria-de-datos">¡Bienvenidos, al mundo de la minería de datos!</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-y-configuracion">Instalación y configuración</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prerrequisitos">Prerrequisitos</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#paso-1-instalar-el-jdk-si-no-lo-tiene">Paso 1: Instalar el JDK si no lo tiene</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#paso-2-descargar-el-spark-y-ubicarlo-en-c">Paso 2: Descargar el Spark y ubicarlo en C:\</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#paso-3-descargar-el-hadoop-y-ubicarlo-en-c-winutils-exe">Paso 3: Descargar el Hadoop y ubicarlo en C:\ «winutils.exe»</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#paso-4-instalar-findspark-y-pyspark">Paso 4: Instalar findspark y pyspark</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#paso-5-configurar-en-un-ide-la-conexion-de-spark-con-pyspark">Paso 5: Configurar en un IDE la conexión de Spark con pyspark</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="configurando-un-entorno-de-codigo-abierto-para-procesar-datos">
+<h1>Configurando un entorno de código abierto para procesar datos<a class="headerlink" href="#configurando-un-entorno-de-codigo-abierto-para-procesar-datos" title="Link to this heading">#</a></h1>
+<section id="instrucciones">
+<h2>Instrucciones.<a class="headerlink" href="#instrucciones" title="Link to this heading">#</a></h2>
+<p>Con la siguientes indicaciones podrás instalar <strong>Miniconda, Python, R y Jupyter Lab</strong></p>
+<section id="instalacion-de-miniconda-y-python">
+<h3>Instalación de miniconda y python.<a class="headerlink" href="#instalacion-de-miniconda-y-python" title="Link to this heading">#</a></h3>
+<p>Instalar Miniconda y python es una excelente opción si quieres un entorno ligero, flexible y fácil de administrar. Aquí te dejo el procedimiento paso a paso para instalarlo en windows.</p>
+<ol class="arabic simple">
+<li><p>Descargar Miniconda
+Ve al sitio oficial: <a class="reference external" href="https://www.anaconda.com/download/success">https://www.anaconda.com/download/success</a></p></li>
+</ol>
+<p>Elige el instalador de windows:</p>
+<a class="reference internal image-reference" href="../_images/Miniconda_dwnld.png"><img alt="numpy" class="align-center" src="../_images/Miniconda_dwnld.png" style="width: 700px;" />
+</a>
+<p>Ejecutan el archivo <code class="docutils literal notranslate"><span class="pre">Miniconda3-latest-Windows-x86_64.exe</span></code> aceptan los términos de licencia, utilicen las opciones <code class="docutils literal notranslate"><span class="pre">(recomended)</span></code> cuando deban escoger, no modifican la ubicación propuesta en la instalación y se aseguran de completar los pasos de la instalación dando finalizar.</p>
+<p>Se dirigen a la barra de inicio en la sesión de busqueda y escriben <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">prompt</span></code>.</p>
+<a class="reference internal image-reference" href="../_images/abrir_miniconda.png"><img alt="numpy" class="align-center" src="../_images/abrir_miniconda.png" style="width: 700px;" />
+</a>
+<p>En la consola de anaconda van a seguir las instrucciones:</p>
+<a class="reference internal image-reference" href="../_images/instalando_conda.png"><img alt="numpy" class="align-center" src="../_images/instalando_conda.png" style="width: 700px;" />
+</a>
+<div class="admonition-importante admonition">
+<p class="admonition-title">Importante</p>
+<ul class="simple">
+<li><p>Sí observan bien, antes de cada linea de comando esta escrito <code class="docutils literal notranslate"><span class="pre">(base)</span></code> esto hace referencia a un ambiente que se crea automáticamente para configurar el tipo de procesamiento que se requiera, por ejemplo: un ambiente para solo webscrapping entonces van todas las librerias relacionadas, otro para aprendizaje de máquima y dedicar solo las librerias de ese proyecto en un entorno exclusivo. Esto con el fin de aislar proyectos y que cada uno tenga sus propias versiones de paquetes, librerias y dependencias.</p></li>
+<li><p>En el entorno (base) es importante hacer las instalaciones de uso general, como actualizar el conda, instalar python e instalar jupyter lab.</p></li>
+</ul>
+</div>
+<p>En el <code class="docutils literal notranslate"><span class="pre">prompt</span> <span class="pre">de</span> <span class="pre">anaconda</span></code> puedes utilizar las siguientes alternativas para instalar python, la primera es restringiendo la versión <code class="docutils literal notranslate"><span class="pre">3.10</span></code> y la segunda tomará la última versión</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Instalar una versión específica de Python en el entorno base</span>
+conda<span class="w"> </span>install<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.11
+
+<span class="c1"># O instalar la última versión disponible</span>
+conda<span class="w"> </span>install<span class="w"> </span>python
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/Ejemplo_python.png"><img alt="numpy" class="align-center" src="../_images/Ejemplo_python.png" style="width: 700px;" />
+</a>
+<p>También es muy importante actualizar el <code class="docutils literal notranslate"><span class="pre">pip</span></code> “el gestor de paquetes oficial de python”, para aumentar las posibilidades de instalación de librerias en jupyter lab, esto se hace de la siguiente manera en el <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">prompt</span></code></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Actualizar en conda el pip</span>
+conda<span class="w"> </span>update<span class="w"> </span>pip
+
+<span class="c1"># O usando conda para reinstalar</span>
+conda<span class="w"> </span>install<span class="w"> </span>pip<span class="w"> </span>--force-reinstall
+
+<span class="c1"># Si pip está corrupto, reinstalar:</span>
+conda<span class="w"> </span>remove<span class="w"> </span>pip
+conda<span class="w"> </span>install<span class="w"> </span>pip
+</pre></div>
+</div>
+<p>JupyterLab es una interfaz de desarrollo interactiva y flexible para trabajar con notebooks, código, datos y documentación en un solo entorno. Es la evolución de Jupyter Notebook, diseñada para ser más potente, modular y extensible.</p>
+<p>Para instalar el jupyter lab en el <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">prompt</span></code> se deben ejecutar cualquiera de los siguientes comandos</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Instalar Jupyter Lab</span>
+conda<span class="w"> </span>install<span class="w"> </span>jupyterlab
+
+<span class="c1"># O una setencia más recomendable</span>
+conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>jupyterlab
+</pre></div>
+</div>
+<div class="admonition-nota admonition">
+<p class="admonition-title">Nota:</p>
+<p>📌 Es muy importante estar pendiente de aprobar las sugerencias que se manifiestan durante la instalación de cualquier paquete o libreria, es imperativo para poder avanzar</p>
+</div>
+<p>Ahora ya pueden elegir el kernel de python cuando desplieguen el jupyter lab. para empezar a utilizar el jupyter lab deben ejecutar en <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">prompt</span></code> la siguiente linea:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ejecutar la interfaz de desarrollo interactiva</span>
+jupyter<span class="w"> </span>lab
+</pre></div>
+</div>
+<p><strong>Finalmente se abrirá una ventana en el navegador web de su preferencia y desde ahí podrá ejecutar sus scripts.</strong></p>
+</section>
+<section id="instalacion-de-r-en-jupyter-lab-desde-anaconda-prompt">
+<h3>Instalación de R en jupyter lab desde anaconda prompt<a class="headerlink" href="#instalacion-de-r-en-jupyter-lab-desde-anaconda-prompt" title="Link to this heading">#</a></h3>
+<p>Lo primero es crear un ambiente propio para R desde el <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">prompt</span></code> de la siguiente manera:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crear un entorno en anaconda prompt en nombre_que_le_quieras_poner_al_entorno puedes ponerle Rstudio</span>
+conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>nombre_que_le_quieras_poner_al_entorno
+</pre></div>
+</div>
+<p>Posteriormente debes activar el entorno creado para localizarte en el y poder hacer las instalaciones requeridas:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Activando el entorno creado para proceder con la instalación de R</span>
+conda<span class="w"> </span>activate<span class="w"> </span>nombre_que_le_pusiste_al_entorno
+</pre></div>
+</div>
+<p>Ahora vamos a instalar R con las siguientes instrucciones:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Instalar R base (lenguaje de programación R)</span>
+conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>r-base
+
+<span class="c1"># Instalar paquetes esenciales de R (incluye herramientas básicas)</span>
+conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>r-essentials
+
+<span class="c1"># Instalar el kernel de R para Jupyter</span>
+conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>r-irkernel
+
+<span class="c1"># Registrar el kernel de R en Jupyter para que sea reconocido</span>
+R<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;IRkernel::installspec()&quot;</span>
+</pre></div>
+</div>
+<p>Es muy importante hacer el registro del kernel de R “la última línea” por eso se debe verificar la instalación de R y los kernels disponibles en jupyter, esto se hace de la siguiente manera:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Verificar que R está instalado</span>
+R<span class="w"> </span>--version
+
+<span class="c1"># Verificar kernels disponibles en Jupyter</span>
+jupyter<span class="w"> </span>kernelspec<span class="w"> </span>list
+</pre></div>
+</div>
+<p><em>Ejemplo para verificar instalación y kernels disponibles</em></p>
+<a class="reference internal image-reference" href="../_images/R_instalacion.png"><img alt="numpy" class="align-center" src="../_images/R_instalacion.png" style="width: 700px;" />
+</a>
+<div class="tip admonition">
+<p class="admonition-title">Próximos pasos recomendados:</p>
+<ol class="arabic simple">
+<li><p>Explora Jupyter Lab: Abre jupyter lab desde Anaconda Prompt.</p></li>
+<li><p>Crea tu primer notebook: Prueba tanto con Python como con R.</p></li>
+<li><p>Gestiona entornos: Usa conda create -n mi_proyecto para nuevos proyectos.</p></li>
+<li><p>Instala paquetes: Utiliza conda install o pip install según necesites.</p></li>
+</ol>
+<p>Recordatorios importantes:</p>
+<ul class="simple">
+<li><p>Mantén tus herramientas actualizadas con conda update.</p></li>
+<li><p>Usa entornos separados para diferentes proyectos.</p></li>
+<li><p>Jupyter Lab te permite trabajar simultáneamente con Python y R.</p></li>
+<li><p>La comunidad de estos proyectos es muy activa - ¡aprovecha los recursos online!.</p></li>
+</ul>
+<p>Soporte continuo:</p>
+<p>Recuerda que este ecosistema es mantenido por comunidades activas. Si encuentras algún problema, consulta la documentación oficial o los foros de cada herramienta.</p>
+</div>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="instalacion-de-pyspark-en-una-maquina-local-en-sistema-operativo-windows">
+<h1>Instalación de PySpark en una máquina local en sistema operativo Windows<a class="headerlink" href="#instalacion-de-pyspark-en-una-maquina-local-en-sistema-operativo-windows" title="Link to this heading">#</a></h1>
+<section id="bienvenidos-al-mundo-de-la-mineria-de-datos">
+<h2>¡Bienvenidos, al mundo de la minería de datos!<a class="headerlink" href="#bienvenidos-al-mundo-de-la-mineria-de-datos" title="Link to this heading">#</a></h2>
+<p>En esta guia, daremos el primer paso para trabajar con una de las herramientas más poderosas en el ecosistema del Big Data: PySpark.</p>
+<p>PySpark es la biblioteca de Python que nos permite interactuar con Apache Spark, un framework de computación distribuida de código abierto diseñado para procesar grandes volúmenes de datos de manera rápida y eficiente. Mientras que Python con librerías como Pandas es excelente para datos que caben en la memoria RAM de una sola máquina, Spark nos permite distribuir el trabajo en un clúster de computadoras o ampliar la capacidad de procesamiento en memoria integrando la memoria RAM y el disco de almacenamiento de un equipo local, posibilitando el manejo del big data.</p>
+<p>Al final de esta guía, habremos instalado y configurado PySpark en tu máquina local, creando un entorno de desarrollo perfecto para aprender los fundamentos de la minería de datos a gran escala usando jupyter lab.</p>
+</section>
+<section id="instalacion-y-configuracion">
+<h2>Instalación y configuración<a class="headerlink" href="#instalacion-y-configuracion" title="Link to this heading">#</a></h2>
+<section id="prerrequisitos">
+<h3>Prerrequisitos<a class="headerlink" href="#prerrequisitos" title="Link to this heading">#</a></h3>
+<p>A continuación listare los insumos necesarios para empezar la instalación y configuración de pyspark</p>
+<div class="admonition-importante admonition">
+<p class="admonition-title">Importante</p>
+<p>A continuación se listarán los insumos necesarios para empezar la instalación y configuración de pyspark, la versión propuesta ya ha sido instalada y probada, obteniendo resultados satisfactorios.</p>
+</div>
+<p>Antes de comenzar, asegúrate de tener lo siguiente instalado en tu sistema</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">python</span></code>.</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Verificando la instalación y versión de python</span>
+python<span class="w"> </span>--version
+</pre></div>
+</div>
+<p>Sí no aparece instalado python, ir a la sesión anterior e instalarlo.</p>
+<ol class="arabic simple" start="2">
+<li><p>Java Development Kit <code class="docutils literal notranslate"><span class="pre">(JDK</span> <span class="pre">8)</span></code>: Spark está construido sobre la máquina virtual de Java (JVM), por lo que JDK es un requisito imprescindible</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Verificando la instalación y versión del jdk de java</span>
+java<span class="w"> </span>-version
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/JavaJDK_version.png"><img alt="numpy" class="align-center" src="../_images/JavaJDK_version.png" style="width: 550px;" />
+</a>
+<ol class="arabic simple" start="3">
+<li><p>Descargar <code class="docutils literal notranslate"><span class="pre">Apache</span> <span class="pre">Spark</span></code> versión 3.2.4-bin-hadoop2.7</p></li>
+<li><p>Descargar <code class="docutils literal notranslate"><span class="pre">Hadoop</span></code> versión 3.2.4-bin-hadoop2.7
+Sí no tienes una versión del <code class="docutils literal notranslate"><span class="pre">JDK</span> <span class="pre">instalada</span></code>,<code class="docutils literal notranslate"><span class="pre">Apache</span> <span class="pre">Spark</span></code> o <code class="docutils literal notranslate"><span class="pre">Hadoop</span></code>, en el siguiente segmento se mostrarán los pasos para la instalación.</p></li>
+</ol>
+<section id="paso-1-instalar-el-jdk-si-no-lo-tiene">
+<h4>Paso 1: Instalar el JDK si no lo tiene<a class="headerlink" href="#paso-1-instalar-el-jdk-si-no-lo-tiene" title="Link to this heading">#</a></h4>
+<p>Si el comando java -version no devolvió una versión, necesitas instalarlo.</p>
+<ol class="arabic simple">
+<li><p>Ve al sitio web Oracle JDK. <a class="reference external" href="https://www.oracle.com/africa/java/technologies/javase/javase8-archive-downloads.html">https://www.oracle.com/africa/java/technologies/javase/javase8-archive-downloads.html</a></p></li>
+<li><p>Descarga la versión JDK 8 para tu sistema operativo «Windows».</p></li>
+</ol>
+<a class="reference internal image-reference" href="../_images/Descarga_jdk.png"><img alt="numpy" class="align-center" src="../_images/Descarga_jdk.png" style="width: 600px;" />
+</a>
+<p>Es muy importante registrarse en la página para acceder al archivo, en cuanto le del click para descargar la página los obligará a hacer un registro, importante pasar por el proceso de verificación de sus datos para poder acceder al archivo.</p>
+<ol class="arabic" start="4">
+<li><p>Ejecuta el instalador y sigue las instrucciones.</p></li>
+<li><p>debes ubicar la carpeta de instalación en la raiz del disco que contega la instalación del sistema operativo, comunmente es C:<br />
+a veces hay conflicto por la ubicación que propone por defecto la instalación, por lo que se propone que se instale en la ubicación por defecto y cuando haya terminado la instalación se copie la carpeta <code class="docutils literal notranslate"><span class="pre">java</span></code> en C:\</p></li>
+<li><p>Configura la variable de entorno JAVA_HOME (Es muy importante):</p>
+<ul>
+<li><p>Windows:</p>
+<ul>
+<li><p>Busca “Variables de entorno” en el menú de inicio.</p></li>
+<li><p>Haz clic en “Variables de entorno.”.</p>
+<a class="reference internal image-reference" href="../_images/Variables_entorno_1.png"><img alt="numpy" class="align-center" src="../_images/Variables_entorno_1.png" style="width: 500px;" />
+</a>
+</li>
+<li><p>En “Variables del sistema”, haz clic en «Nueva».</p></li>
+<li><p>Nombre de la variable: JAVA_HOME</p></li>
+<li><p>Valor de la variable: La ruta donde instalaste el JDK (ej., C:\Java\jdk1.8.0_202) sin seleccionar la carpeta bin.</p></li>
+<li><p>Haz clic en Ok.</p>
+<a class="reference internal image-reference" href="../_images/Variables_entorno_2.png"><img alt="numpy" class="align-center" src="../_images/Variables_entorno_2.png" style="width: 500px;" />
+</a>
+</li>
+<li><p>En variables del sistema ubicas «path» y haz click en editar.</p></li>
+<li><p>en editar la variable de entorno das click en el boton «Nueva» y escribes el mismo nombre de la variable creada de esta forma %JAVA_HOME%\bin, es muy importante que especifiques la ruta final «\bin».</p></li>
+<li><p>Haz clic en Aceptar.</p>
+<a class="reference internal image-reference" href="../_images/Variables_entorno_3.png"><img alt="numpy" class="align-center" src="../_images/Variables_entorno_3.png" style="width: 500px;" />
+</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="paso-2-descargar-el-spark-y-ubicarlo-en-c">
+<h4>Paso 2: Descargar el Spark y ubicarlo en C:\<a class="headerlink" href="#paso-2-descargar-el-spark-y-ubicarlo-en-c" title="Link to this heading">#</a></h4>
+<ol class="arabic simple">
+<li><p>Ir al sitio <a class="reference external" href="https://archive.apache.org/dist/spark/spark-3.2.4/">https://archive.apache.org/dist/spark/spark-3.2.4/</a> y descargar el archivo <code class="docutils literal notranslate"><span class="pre">spark-3.2.4-bin-hadoop2.7.tgz</span></code> pesa 260M</p></li>
+</ol>
+<a class="reference internal image-reference" href="../_images/Descargar_spark_1.png"><img alt="numpy" class="align-center" src="../_images/Descargar_spark_1.png" style="width: 500px;" />
+</a>
+<ol class="arabic simple" start="2">
+<li><p>Descomprimir y ubicar la carpeta en la raiz del disco donde está instalado el sistema operativo, comunmente es C:\</p></li>
+<li><p>Configurar las variables de entorno para este componente, la variable se debe llamar SPARK_HOME y se deben seguir los mismos pasos que se delinearon en la configuración de la variable JAVA_HOME.</p></li>
+</ol>
+</section>
+<section id="paso-3-descargar-el-hadoop-y-ubicarlo-en-c-winutils-exe">
+<h4>Paso 3: Descargar el Hadoop y ubicarlo en C:\ «winutils.exe»<a class="headerlink" href="#paso-3-descargar-el-hadoop-y-ubicarlo-en-c-winutils-exe" title="Link to this heading">#</a></h4>
+<ol class="arabic simple">
+<li><p>ir al sitio <a class="github reference external" href="https://github.com/cdarlint/winutils/tree/master/hadoop-2.7.2/bin">cdarlint/winutils</a></p></li>
+<li><p>ubicar el archivo winutils.exe y descargarlo.</p></li>
+</ol>
+<a class="reference internal image-reference" href="../_images/Descar_hadoop.png"><img alt="numpy" class="align-center" src="../_images/Descar_hadoop.png" style="width: 500px;" />
+</a>
+<ol class="arabic simple" start="3">
+<li><p>Crear una carpeta en el disco C:\ con el nombre de «Hadoop» y una vez dentro de la carpeta creamos otra con el nombre de «bin» para ubicar el archivo descargado en esta ubicación.</p></li>
+<li><p>Se configuran las variables de entorno para este componente, la variable se debe llamar HADOOP_HOME y se deben seguir los mismos pasos que se especificaron en la configuración de la variable JAVA_HOME.</p></li>
+</ol>
+</section>
+<section id="paso-4-instalar-findspark-y-pyspark">
+<h4>Paso 4: Instalar findspark y pyspark<a class="headerlink" href="#paso-4-instalar-findspark-y-pyspark" title="Link to this heading">#</a></h4>
+<p>Es importante instalar findspark ya que cumple el papel de comunicarse y configurar el script automaticamente con las variables de entorno. Pyspark que cumple el papel de unir a Apache spark con python, conviritendolo en un motor de procesamiento de datos distribuido y de alto rendimiento.</p>
+<p>La instalación es recomendable hacerla en el <code class="docutils literal notranslate"><span class="pre">Prompt</span> <span class="pre">de</span> <span class="pre">Anaconda</span></code> mediante las siguientes instrucciones:</p>
+<p>Primero es importante crear un entorno para las librerias de Spark, pueden nombrarlo <code class="docutils literal notranslate"><span class="pre">Pyspark</span></code>, recordemos como se hace:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crear un entorno en anaconda prompt con el nombre Pyspark</span>
+conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>Pyspark
+</pre></div>
+</div>
+<p>Posteriormente debes activar el entorno creado para localizarte en él y poder hacer las instalaciones requeridas:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Activando el entorno creado para proceder con la instalación de R</span>
+conda<span class="w"> </span>activate<span class="w"> </span>Pyspark
+</pre></div>
+</div>
+<p><strong>Segundo instalar pyspark</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Instalar PySpark con conda</span>
+conda<span class="w"> </span>install<span class="w"> </span>pyspark
+</pre></div>
+</div>
+<p><strong>Y después instalar findspark</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Instalar Findspark con conda</span>
+conda<span class="w"> </span>install<span class="w"> </span>findspark
+</pre></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Tip</p>
+<p>O también está la posibilidad de crear el entorno <code class="docutils literal notranslate"><span class="pre">Pyspark</span></code> con la primera letra en mayúscula para diferencialo de la libreria pyspark y en el mismo comando instalar pyspark y findspark y una versión de python <code class="docutils literal notranslate"><span class="pre">3.10</span></code> menor para mejorar la compatibilidad con la versíon de Apache spark 3.2.6</p>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>Pyspark<span class="w"> </span>pyspark<span class="w"> </span>findspark<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10<span class="w"> </span><span class="c1"># Crea el entorno de Pyspark e instala findspark y pyspark y python 3.10</span>
+conda<span class="w"> </span>activate<span class="w"> </span>Pyspark<span class="w">                                </span><span class="c1"># Activar el entorno Pyspark</span>
+jupyter<span class="w"> </span>lab<span class="w">                                           </span><span class="c1"># para ejecutar el notebook de jupyter lab</span>
+</pre></div>
+</div>
+<p><em>Se han listado las dos biblitecas necesarias para que funcione Pyspark, puedes instalar las librerias que sean requeridas para trabajar otros temas</em>.</p>
+</section>
+<section id="paso-5-configurar-en-un-ide-la-conexion-de-spark-con-pyspark">
+<h4>Paso 5: Configurar en un IDE la conexión de Spark con pyspark<a class="headerlink" href="#paso-5-configurar-en-un-ide-la-conexion-de-spark-con-pyspark" title="Link to this heading">#</a></h4>
+<p>Se debe abrir jupyter lab desde el <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">Prompt</span></code> desde el entorno de Pyspark con la instrucción.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>jupyter<span class="w"> </span>lab
+</pre></div>
+</div>
+<p>Una vez escojas python como kernel ejecuta el siguiente código:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">findspark</span>                              <span class="c1"># Importa la librería para localizar Spark en el sistema</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>                                     <span class="c1"># Importa el módulo para interactuar con el sistema operativo</span>
+<span class="n">findspark</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>                              <span class="c1"># Inicializa findspark para que Python encuentre Spark</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pyspark</span>                                <span class="c1"># Importa la librería principal de PySpark</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyspark.sql</span><span class="w"> </span><span class="kn">import</span> <span class="n">SparkSession</span>          <span class="c1"># Importa la clase SparkSession para trabajar con DataFrames</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyspark.sql.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">StructType</span><span class="p">,</span> <span class="n">StructField</span><span class="p">,</span> <span class="n">IntegerType</span><span class="p">,</span> <span class="n">StringType</span>  <span class="c1"># Importa tipos de datos</span>
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>   <span class="c1"># Crea o recupera una sesión de Spark existente</span>
+<span class="n">spark</span>                                         <span class="c1"># Muestra información de la sesión de Spark activa</span>
+</pre></div>
+</div>
+<p>y sí ejecuta el siguiente resultado:</p>
+<a class="reference internal image-reference" href="../_images/Exec_pyspark.png"><img alt="numpy" class="align-center" src="../_images/Exec_pyspark.png" style="width: 500px;" />
+</a>
+<p>Pyspark está listo para ser probado, puede utilizar el siguiente código para hacer la prueba:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crear datos de ejemplo: ventas de productos</span>
+<span class="n">datos</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Laptop&quot;</span><span class="p">,</span> <span class="s2">&quot;Electronica&quot;</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;Mouse&quot;</span><span class="p">,</span> <span class="s2">&quot;Electronica&quot;</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;Teclado&quot;</span><span class="p">,</span> <span class="s2">&quot;Electronica&quot;</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;Silla&quot;</span><span class="p">,</span> <span class="s2">&quot;Muebles&quot;</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;Escritorio&quot;</span><span class="p">,</span> <span class="s2">&quot;Muebles&quot;</span><span class="p">,</span> <span class="mi">800</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;Monitor&quot;</span><span class="p">,</span> <span class="s2">&quot;Electronica&quot;</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;Lampara&quot;</span><span class="p">,</span> <span class="s2">&quot;Iluminacion&quot;</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="c1"># Definir el esquema explícitamente</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="n">StructType</span><span class="p">([</span>                         <span class="c1"># Define la estructura del DataFrame</span>
+    <span class="n">StructField</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">IntegerType</span><span class="p">(),</span> <span class="kc">True</span><span class="p">),</span>
+    <span class="n">StructField</span><span class="p">(</span><span class="s2">&quot;producto&quot;</span><span class="p">,</span> <span class="n">StringType</span><span class="p">(),</span> <span class="kc">True</span><span class="p">),</span>
+    <span class="n">StructField</span><span class="p">(</span><span class="s2">&quot;categoria&quot;</span><span class="p">,</span> <span class="n">StringType</span><span class="p">(),</span> <span class="kc">True</span><span class="p">),</span>
+    <span class="n">StructField</span><span class="p">(</span><span class="s2">&quot;precio&quot;</span><span class="p">,</span> <span class="n">IntegerType</span><span class="p">(),</span> <span class="kc">True</span><span class="p">),</span>
+    <span class="n">StructField</span><span class="p">(</span><span class="s2">&quot;cantidad&quot;</span><span class="p">,</span> <span class="n">IntegerType</span><span class="p">(),</span> <span class="kc">True</span><span class="p">)</span>
+<span class="p">])</span>
+
+<span class="c1"># Crear el DataFrame con esquema explícito</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">datos</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span>     <span class="c1"># Crea un DataFrame con esquema definido</span>
+
+<span class="c1"># Registrar el DataFrame como tabla temporal SQL</span>
+<span class="n">df</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="s2">&quot;ventas&quot;</span><span class="p">)</span>          <span class="c1"># Crea una vista temporal llamada &#39;ventas&#39;</span>
+
+<span class="c1"># Ver los datos</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== Datos Originales ===&quot;</span><span class="p">)</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM ventas&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>      <span class="c1"># Consulta SQL básica</span>
+</pre></div>
+</div>
+<p>Si aparece el resultado despues del comando <code class="docutils literal notranslate"><span class="pre">show()</span></code> como se ve en la siguiente imagen, es porque la compatibilidad de los componentes instalados funcionan perfectamente.</p>
+<a class="reference internal image-reference" href="../_images/Datos_pyspark.png"><img alt="numpy" class="align-center" src="../_images/Datos_pyspark.png" style="width: 500px;" />
+</a>
+<p>Con la instalación de Miniconda, Python y PySpark, has dado el primer paso hacia un entorno de trabajo en big data, reproducible y escalable para el análisis de datos. Este manual ha sido diseñado para guiarte con claridad y precisión, anticipando los puntos críticos que suelen generar dudas en la configuración inicial.</p>
+<p>Recuerden que cada entorno virtual que creen será una cápsula de trabajo independiente, ideal para mantener tus proyectos organizados y tus dependencias bajo control. Esta práctica no solo mejora la estabilidad de tus desarrollos, sino que también facilita la colaboración y la documentación técnica.</p>
+<p>Este documento forma parte de un esfuerzo continuo por hacer que la tecnología sea más accesible.</p>
+<p>Gracias por seguir este recorrido.</p>
+<p>Autor: <strong>Steven Cifuentes Rugeles</strong>.</p>
+<p>Fecha: Octubre de 2025</p>
+<p><em>Documentación para consultar biblioteca de pyspark</em>: <a class="reference external" href="https://sparkbyexamples.com/pyspark-tutorial/">https://sparkbyexamples.com/pyspark-tutorial/</a></p>
+</section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./modulo_4"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../modulo_3/modulo_3.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Visualización de datos</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../modulo_5/modulo_5.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Primeros pasos con pyspark</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Configurando un entorno de código abierto para procesar datos</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instrucciones">Instrucciones.</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-de-miniconda-y-python">Instalación de miniconda y python.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-de-r-en-jupyter-lab-desde-anaconda-prompt">Instalación de R en jupyter lab desde anaconda prompt</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-de-pyspark-en-una-maquina-local-en-sistema-operativo-windows">Instalación de PySpark en una máquina local en sistema operativo Windows</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bienvenidos-al-mundo-de-la-mineria-de-datos">¡Bienvenidos, al mundo de la minería de datos!</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-y-configuracion">Instalación y configuración</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prerrequisitos">Prerrequisitos</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#paso-1-instalar-el-jdk-si-no-lo-tiene">Paso 1: Instalar el JDK si no lo tiene</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#paso-2-descargar-el-spark-y-ubicarlo-en-c">Paso 2: Descargar el Spark y ubicarlo en C:\</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#paso-3-descargar-el-hadoop-y-ubicarlo-en-c-winutils-exe">Paso 3: Descargar el Hadoop y ubicarlo en C:\ «winutils.exe»</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#paso-4-instalar-findspark-y-pyspark">Paso 4: Instalar findspark y pyspark</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#paso-5-configurar-en-un-ide-la-conexion-de-spark-con-pyspark">Paso 5: Configurar en un IDE la conexión de Spark con pyspark</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Departamento Administrativo Nacional de Estadística - DANE
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
