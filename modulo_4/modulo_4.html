@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Configurando un entorno de código abierto para procesar datos &#8212; Análisis y procesamiento de datos con Open Source</title>
+    <title>Manipulación de datos con pandas &#8212; Análisis y procesamiento de datos con Open Source</title>
   
   
   
@@ -61,8 +61,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'modulo_4/modulo_4';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Primeros pasos con pyspark" href="../modulo_5/modulo_5.html" />
-    <link rel="prev" title="Visualización de datos" href="../modulo_3/modulo_3.html" />
+    <link rel="next" title="Visualización de datos" href="../modulo_5/modulo_5.html" />
+    <link rel="prev" title="Manipulación de datos con numpy" href="../modulo_3/modulo_3.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -188,11 +188,9 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../modulo_1/modulo_1.html">Entornos de desarrollo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../modulo_2/modulo_2.html">Un primer código en Python y R</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../modulo_3/modulo_3.html">Visualización de datos</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Configurando un entorno de código abierto para procesar datos</a></li>
-
-<li class="toctree-l1"><a class="reference internal" href="../modulo_5/modulo_5.html">Primeros pasos con pyspark</a></li>
-
+<li class="toctree-l1"><a class="reference internal" href="../modulo_3/modulo_3.html">Manipulación de datos con numpy</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Manipulación de datos con pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modulo_5/modulo_5.html">Visualización de datos</a></li>
 </ul>
 
     </div>
@@ -331,7 +329,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Configurando un entorno de código abierto para procesar datos</h1>
+    <h1>Manipulación de datos con pandas</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -341,31 +339,45 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Configurando un entorno de código abierto para procesar datos</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instrucciones">Instrucciones.</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-de-miniconda-y-python">Instalación de miniconda y python.</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-de-r-en-jupyter-lab-desde-anaconda-prompt">Instalación de R en jupyter lab desde anaconda prompt</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-del-problema">Análisis del Problema</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#declaracion-y-exploracion-de-series-y-dataframes">Declaración y exploración de series y dataframes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#series">Series</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dataframe">DataFrame</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexacion-y-slicing">Indexación y slicing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indexacion-en-series">Indexación en <em>Series</em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slicing-en-series"><em>Slicing</em> en <em>Series</em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indexacion-en-dataframes">Indexación en <em>DataFrames</em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eliminacion-de-filas-y-columnas">Eliminación de filas y columnas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eliminacion-de-filas">Eliminación de <em>filas</em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eliminacion-de-columnas">Eliminación de <em>columnas</em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eliminacion-condicional-de-filas">Eliminación condicional de filas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eliminacion-de-valores-nulos-con-dropna">Eliminación de valores nulos con dropna()</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agrupacion-de-filas">Agrupación de filas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#agrupacion-con-groupby">Agrupación con groupby()</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#agregacion-de-datos">Agregación de datos</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#agrupacion-por-multiples-columnas">Agrupación por múltiples columnas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uso-de-agg-para-personalizar-agregaciones">Uso de agg() para personalizar agregaciones</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reiniciar-el-indice-despues-de-agrupar">Reiniciar el índice después de agrupar</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#concatenacion-y-merge">Concatenación y merge</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#concatenacion-con-pd-concat">Concatenación con pd.concat()</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#merge-con-pd-merge"><em>Merge</em> con pd.merge()</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reshape-y-de-tabla-de-contingencia">Reshape y de tabla de contingencia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#apendice">Apéndice</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#documentacion">Documentación</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#referencias">Referencias</a></li>
 </ul>
 </li>
 </ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-de-pyspark-en-una-maquina-local-en-sistema-operativo-windows">Instalación de PySpark en una máquina local en sistema operativo Windows</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bienvenidos-al-mundo-de-la-mineria-de-datos">¡Bienvenidos, al mundo de la minería de datos!</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-y-configuracion">Instalación y configuración</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prerrequisitos">Prerrequisitos</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#paso-1-instalar-el-jdk-si-no-lo-tiene">Paso 1: Instalar el JDK si no lo tiene</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#paso-2-descargar-el-spark-y-ubicarlo-en-c">Paso 2: Descargar el Spark y ubicarlo en C:\</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#paso-3-descargar-el-hadoop-y-ubicarlo-en-c-winutils-exe">Paso 3: Descargar el Hadoop y ubicarlo en C:\ «winutils.exe»</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#paso-4-instalar-findspark-y-pyspark">Paso 4: Instalar findspark y pyspark</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#paso-5-configurar-en-un-ide-la-conexion-de-spark-con-pyspark">Paso 5: Configurar en un IDE la conexión de Spark con pyspark</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
             </nav>
         </div>
     </div>
@@ -376,340 +388,943 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="configurando-un-entorno-de-codigo-abierto-para-procesar-datos">
-<h1>Configurando un entorno de código abierto para procesar datos<a class="headerlink" href="#configurando-un-entorno-de-codigo-abierto-para-procesar-datos" title="Link to this heading">#</a></h1>
-<section id="instrucciones">
-<h2>Instrucciones.<a class="headerlink" href="#instrucciones" title="Link to this heading">#</a></h2>
-<p>Con la siguientes indicaciones podrás instalar <strong>Miniconda, Python, R y Jupyter Lab</strong></p>
-<section id="instalacion-de-miniconda-y-python">
-<h3>Instalación de miniconda y python.<a class="headerlink" href="#instalacion-de-miniconda-y-python" title="Link to this heading">#</a></h3>
-<p>Instalar Miniconda y python es una excelente opción si quieres un entorno ligero, flexible y fácil de administrar. Aquí te dejo el procedimiento paso a paso para instalarlo en windows.</p>
-<ol class="arabic simple">
-<li><p>Descargar Miniconda
-Ve al sitio oficial: <a class="reference external" href="https://www.anaconda.com/download/success">https://www.anaconda.com/download/success</a></p></li>
-</ol>
-<p>Elige el instalador de windows:</p>
-<a class="reference internal image-reference" href="../_images/Miniconda_dwnld.png"><img alt="numpy" class="align-center" src="../_images/Miniconda_dwnld.png" style="width: 700px;" />
+  <section class="tex2jax_ignore mathjax_ignore" id="manipulacion-de-datos-con-pandas">
+<h1>Manipulación de datos con pandas<a class="headerlink" href="#manipulacion-de-datos-con-pandas" title="Link to this heading">#</a></h1>
+<p><strong>Dataframes, operaciones, cruce de datos, Analítica de datos.</strong></p>
+<a class="reference internal image-reference" href="../_images/science.png"><img alt="numpy" class="align-center" src="../_images/science.png" style="width: 175px;" />
 </a>
-<p>Ejecutan el archivo <code class="docutils literal notranslate"><span class="pre">Miniconda3-latest-Windows-x86_64.exe</span></code> aceptan los términos de licencia, utilicen las opciones <code class="docutils literal notranslate"><span class="pre">(recomended)</span></code> cuando deban escoger, no modifican la ubicación propuesta en la instalación y se aseguran de completar los pasos de la instalación dando finalizar.</p>
-<p>Se dirigen a la barra de inicio en la sesión de busqueda y escriben <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">prompt</span></code>.</p>
-<a class="reference internal image-reference" href="../_images/abrir_miniconda.png"><img alt="numpy" class="align-center" src="../_images/abrir_miniconda.png" style="width: 700px;" />
+<p style="text-align: center; font-size: 8px;">
+    <a href="https://www.flaticon.com/free-icons/dataframe" title="dataframe icons">Dataframe icons created by orvipixel - Flaticon</a>
+</p><section id="analisis-del-problema">
+<h2>Análisis del Problema<a class="headerlink" href="#analisis-del-problema" title="Link to this heading">#</a></h2>
+<p>En el análisis de datos, una de las tareas más importantes es contar con herramientas que permitan organizar, transformar y explorar la información de manera eficiente. En el ecosistema de Python, la librería <em>pandas</em> se ha consolidado como un estándar para estas labores, gracias a su facilidad de uso y a la potencia de sus estructuras de datos principales: <em>Series</em> y <em>DataFrame</em>.</p>
+<p>Con <em>pandas</em> es posible realizar operaciones como la limpieza de datos, la selección y filtrado de registros, la creación de nuevas variables, la combinación de diferentes fuentes de información y el cálculo de estadísticas descriptivas, entre muchas otras. Estas funcionalidades convierten a <em>pandas</em> en un recurso fundamental tanto para el trabajo académico como para el entorno profesional, ya que permite transformar datos en bruto en información lista para su análisis e interpretación.</p>
+<p>A lo largo de este material se explorarán las bases del manejo de <em>pandas</em>, con ejemplos prácticos que mostrarán cómo esta librería puede facilitar de manera notable el procesamiento y análisis de datos en Python.</p>
+<a class="reference internal image-reference" href="../_images/frame.png"><img alt="numpy" class="align-center" src="../_images/frame.png" style="width: 175px;" />
 </a>
-<p>En la consola de anaconda van a seguir las instrucciones:</p>
-<a class="reference internal image-reference" href="../_images/instalando_conda.png"><img alt="numpy" class="align-center" src="../_images/instalando_conda.png" style="width: 700px;" />
-</a>
-<div class="admonition-importante admonition">
-<p class="admonition-title">Importante</p>
+<p style="text-align: center; font-size: 8px;">
+    <a href="https://www.flaticon.com/free-icons/footage" title="footage icons">Footage icons created by Sebastian Belalcazar - Flaticon</a>
+</p><div class="tip admonition">
+<p class="admonition-title">Objetivos de la sesión</p>
 <ul class="simple">
-<li><p>Sí observan bien, antes de cada linea de comando esta escrito <code class="docutils literal notranslate"><span class="pre">(base)</span></code> esto hace referencia a un ambiente que se crea automáticamente para configurar el tipo de procesamiento que se requiera, por ejemplo: un ambiente para solo webscrapping entonces van todas las librerias relacionadas, otro para aprendizaje de máquima y dedicar solo las librerias de ese proyecto en un entorno exclusivo. Esto con el fin de aislar proyectos y que cada uno tenga sus propias versiones de paquetes, librerias y dependencias.</p></li>
-<li><p>En el entorno (base) es importante hacer las instalaciones de uso general, como actualizar el conda, instalar python e instalar jupyter lab.</p></li>
+<li><p>Conocer algunas formas de declaración y exploración de series y dataframes</p></li>
+<li><p>Aplicar métodos de indexación y slicing</p></li>
+<li><p>Aplicar métodos de eliminación de filas y columnas</p></li>
+<li><p>Aplicar métodos de agrupación de filas</p></li>
+<li><p>Aplicar operaciones de concatenación y merge</p></li>
+<li><p>Aplicar funciones de reshape y de tabla de contingencia</p></li>
 </ul>
 </div>
-<p>En el <code class="docutils literal notranslate"><span class="pre">prompt</span> <span class="pre">de</span> <span class="pre">anaconda</span></code> puedes utilizar las siguientes alternativas para instalar python, la primera es restringiendo la versión <code class="docutils literal notranslate"><span class="pre">3.10</span></code> y la segunda tomará la última versión</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Instalar una versión específica de Python en el entorno base</span>
-conda<span class="w"> </span>install<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.11
-
-<span class="c1"># O instalar la última versión disponible</span>
-conda<span class="w"> </span>install<span class="w"> </span>python
-</pre></div>
+<div class="important admonition">
+<p class="admonition-title">Actividad</p>
+<p>Abrir el enlace al recurso de esta sesión y ejecutarlo en Google Colab de acuerdo a las indicaciones del profesor.</p>
 </div>
-<a class="reference internal image-reference" href="../_images/Ejemplo_python.png"><img alt="numpy" class="align-center" src="../_images/Ejemplo_python.png" style="width: 700px;" />
-</a>
-<p>También es muy importante actualizar el <code class="docutils literal notranslate"><span class="pre">pip</span></code> “el gestor de paquetes oficial de python”, para aumentar las posibilidades de instalación de librerias en jupyter lab, esto se hace de la siguiente manera en el <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">prompt</span></code></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Actualizar en conda el pip</span>
-conda<span class="w"> </span>update<span class="w"> </span>pip
-
-<span class="c1"># O usando conda para reinstalar</span>
-conda<span class="w"> </span>install<span class="w"> </span>pip<span class="w"> </span>--force-reinstall
-
-<span class="c1"># Si pip está corrupto, reinstalar:</span>
-conda<span class="w"> </span>remove<span class="w"> </span>pip
-conda<span class="w"> </span>install<span class="w"> </span>pip
-</pre></div>
-</div>
-<p>JupyterLab es una interfaz de desarrollo interactiva y flexible para trabajar con notebooks, código, datos y documentación en un solo entorno. Es la evolución de Jupyter Notebook, diseñada para ser más potente, modular y extensible.</p>
-<p>Para instalar el jupyter lab en el <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">prompt</span></code> se deben ejecutar cualquiera de los siguientes comandos</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Instalar Jupyter Lab</span>
-conda<span class="w"> </span>install<span class="w"> </span>jupyterlab
-
-<span class="c1"># O una setencia más recomendable</span>
-conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>jupyterlab
-</pre></div>
-</div>
-<div class="admonition-nota admonition">
-<p class="admonition-title">Nota:</p>
-<p>📌 Es muy importante estar pendiente de aprobar las sugerencias que se manifiestan durante la instalación de cualquier paquete o libreria, es imperativo para poder avanzar</p>
-</div>
-<p>Ahora ya pueden elegir el kernel de python cuando desplieguen el jupyter lab. para empezar a utilizar el jupyter lab deben ejecutar en <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">prompt</span></code> la siguiente linea:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ejecutar la interfaz de desarrollo interactiva</span>
-jupyter<span class="w"> </span>lab
-</pre></div>
-</div>
-<p><strong>Finalmente se abrirá una ventana en el navegador web de su preferencia y desde ahí podrá ejecutar sus scripts.</strong></p>
-</section>
-<section id="instalacion-de-r-en-jupyter-lab-desde-anaconda-prompt">
-<h3>Instalación de R en jupyter lab desde anaconda prompt<a class="headerlink" href="#instalacion-de-r-en-jupyter-lab-desde-anaconda-prompt" title="Link to this heading">#</a></h3>
-<p>Lo primero es crear un ambiente propio para R desde el <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">prompt</span></code> de la siguiente manera:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crear un entorno en anaconda prompt en nombre_que_le_quieras_poner_al_entorno puedes ponerle Rstudio</span>
-conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>nombre_que_le_quieras_poner_al_entorno
-</pre></div>
-</div>
-<p>Posteriormente debes activar el entorno creado para localizarte en el y poder hacer las instalaciones requeridas:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Activando el entorno creado para proceder con la instalación de R</span>
-conda<span class="w"> </span>activate<span class="w"> </span>nombre_que_le_pusiste_al_entorno
-</pre></div>
-</div>
-<p>Ahora vamos a instalar R con las siguientes instrucciones:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Instalar R base (lenguaje de programación R)</span>
-conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>r-base
-
-<span class="c1"># Instalar paquetes esenciales de R (incluye herramientas básicas)</span>
-conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>r-essentials
-
-<span class="c1"># Instalar el kernel de R para Jupyter</span>
-conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>r-irkernel
-
-<span class="c1"># Registrar el kernel de R en Jupyter para que sea reconocido</span>
-R<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;IRkernel::installspec()&quot;</span>
-</pre></div>
-</div>
-<p>Es muy importante hacer el registro del kernel de R “la última línea” por eso se debe verificar la instalación de R y los kernels disponibles en jupyter, esto se hace de la siguiente manera:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Verificar que R está instalado</span>
-R<span class="w"> </span>--version
-
-<span class="c1"># Verificar kernels disponibles en Jupyter</span>
-jupyter<span class="w"> </span>kernelspec<span class="w"> </span>list
-</pre></div>
-</div>
-<p><em>Ejemplo para verificar instalación y kernels disponibles</em></p>
-<a class="reference internal image-reference" href="../_images/R_instalacion.png"><img alt="numpy" class="align-center" src="../_images/R_instalacion.png" style="width: 700px;" />
-</a>
-<div class="tip admonition">
-<p class="admonition-title">Próximos pasos recomendados:</p>
-<ol class="arabic simple">
-<li><p>Explora Jupyter Lab: Abre jupyter lab desde Anaconda Prompt.</p></li>
-<li><p>Crea tu primer notebook: Prueba tanto con Python como con R.</p></li>
-<li><p>Gestiona entornos: Usa conda create -n mi_proyecto para nuevos proyectos.</p></li>
-<li><p>Instala paquetes: Utiliza conda install o pip install según necesites.</p></li>
-</ol>
-<p>Recordatorios importantes:</p>
+<div class="nota admonition">
+<p class="admonition-title">Recursos</p>
 <ul class="simple">
-<li><p>Mantén tus herramientas actualizadas con conda update.</p></li>
-<li><p>Usa entornos separados para diferentes proyectos.</p></li>
-<li><p>Jupyter Lab te permite trabajar simultáneamente con Python y R.</p></li>
-<li><p>La comunidad de estos proyectos es muy activa - ¡aprovecha los recursos online!.</p></li>
+<li><p>Notebook en Python: <a class="reference external" href="https://github.com/monteroanibal/CursoPython2025II/blob/main/notebooks/CP2025II_Sesion4_Python.ipynb">Enlace a GitHub</a></p></li>
 </ul>
-<p>Soporte continuo:</p>
-<p>Recuerda que este ecosistema es mantenido por comunidades activas. Si encuentras algún problema, consulta la documentación oficial o los foros de cada herramienta.</p>
 </div>
 </section>
-</section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="instalacion-de-pyspark-en-una-maquina-local-en-sistema-operativo-windows">
-<h1>Instalación de PySpark en una máquina local en sistema operativo Windows<a class="headerlink" href="#instalacion-de-pyspark-en-una-maquina-local-en-sistema-operativo-windows" title="Link to this heading">#</a></h1>
-<section id="bienvenidos-al-mundo-de-la-mineria-de-datos">
-<h2>¡Bienvenidos, al mundo de la minería de datos!<a class="headerlink" href="#bienvenidos-al-mundo-de-la-mineria-de-datos" title="Link to this heading">#</a></h2>
-<p>En esta guia, daremos el primer paso para trabajar con una de las herramientas más poderosas en el ecosistema del Big Data: PySpark.</p>
-<p>PySpark es la biblioteca de Python que nos permite interactuar con Apache Spark, un framework de computación distribuida de código abierto diseñado para procesar grandes volúmenes de datos de manera rápida y eficiente. Mientras que Python con librerías como Pandas es excelente para datos que caben en la memoria RAM de una sola máquina, Spark nos permite distribuir el trabajo en un clúster de computadoras o ampliar la capacidad de procesamiento en memoria integrando la memoria RAM y el disco de almacenamiento de un equipo local, posibilitando el manejo del big data.</p>
-<p>Al final de esta guía, habremos instalado y configurado PySpark en tu máquina local, creando un entorno de desarrollo perfecto para aprender los fundamentos de la minería de datos a gran escala usando jupyter lab.</p>
-</section>
-<section id="instalacion-y-configuracion">
-<h2>Instalación y configuración<a class="headerlink" href="#instalacion-y-configuracion" title="Link to this heading">#</a></h2>
-<section id="prerrequisitos">
-<h3>Prerrequisitos<a class="headerlink" href="#prerrequisitos" title="Link to this heading">#</a></h3>
-<p>A continuación listare los insumos necesarios para empezar la instalación y configuración de pyspark</p>
-<div class="admonition-importante admonition">
-<p class="admonition-title">Importante</p>
-<p>A continuación se listarán los insumos necesarios para empezar la instalación y configuración de pyspark, la versión propuesta ya ha sido instalada y probada, obteniendo resultados satisfactorios.</p>
-</div>
-<p>Antes de comenzar, asegúrate de tener lo siguiente instalado en tu sistema</p>
-<ol class="arabic simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">python</span></code>.</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Verificando la instalación y versión de python</span>
-python<span class="w"> </span>--version
-</pre></div>
-</div>
-<p>Sí no aparece instalado python, ir a la sesión anterior e instalarlo.</p>
-<ol class="arabic simple" start="2">
-<li><p>Java Development Kit <code class="docutils literal notranslate"><span class="pre">(JDK</span> <span class="pre">8)</span></code>: Spark está construido sobre la máquina virtual de Java (JVM), por lo que JDK es un requisito imprescindible</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Verificando la instalación y versión del jdk de java</span>
-java<span class="w"> </span>-version
-</pre></div>
-</div>
-<a class="reference internal image-reference" href="../_images/JavaJDK_version.png"><img alt="numpy" class="align-center" src="../_images/JavaJDK_version.png" style="width: 550px;" />
-</a>
-<ol class="arabic simple" start="3">
-<li><p>Descargar <code class="docutils literal notranslate"><span class="pre">Apache</span> <span class="pre">Spark</span></code> versión 3.2.4-bin-hadoop2.7</p></li>
-<li><p>Descargar <code class="docutils literal notranslate"><span class="pre">Hadoop</span></code> versión 3.2.4-bin-hadoop2.7
-Sí no tienes una versión del <code class="docutils literal notranslate"><span class="pre">JDK</span> <span class="pre">instalada</span></code>,<code class="docutils literal notranslate"><span class="pre">Apache</span> <span class="pre">Spark</span></code> o <code class="docutils literal notranslate"><span class="pre">Hadoop</span></code>, en el siguiente segmento se mostrarán los pasos para la instalación.</p></li>
-</ol>
-<section id="paso-1-instalar-el-jdk-si-no-lo-tiene">
-<h4>Paso 1: Instalar el JDK si no lo tiene<a class="headerlink" href="#paso-1-instalar-el-jdk-si-no-lo-tiene" title="Link to this heading">#</a></h4>
-<p>Si el comando java -version no devolvió una versión, necesitas instalarlo.</p>
-<ol class="arabic simple">
-<li><p>Ve al sitio web Oracle JDK. <a class="reference external" href="https://www.oracle.com/africa/java/technologies/javase/javase8-archive-downloads.html">https://www.oracle.com/africa/java/technologies/javase/javase8-archive-downloads.html</a></p></li>
-<li><p>Descarga la versión JDK 8 para tu sistema operativo «Windows».</p></li>
-</ol>
-<a class="reference internal image-reference" href="../_images/Descarga_jdk.png"><img alt="numpy" class="align-center" src="../_images/Descarga_jdk.png" style="width: 600px;" />
-</a>
-<p>Es muy importante registrarse en la página para acceder al archivo, en cuanto le del click para descargar la página los obligará a hacer un registro, importante pasar por el proceso de verificación de sus datos para poder acceder al archivo.</p>
-<ol class="arabic" start="4">
-<li><p>Ejecuta el instalador y sigue las instrucciones.</p></li>
-<li><p>debes ubicar la carpeta de instalación en la raiz del disco que contega la instalación del sistema operativo, comunmente es C:<br />
-a veces hay conflicto por la ubicación que propone por defecto la instalación, por lo que se propone que se instale en la ubicación por defecto y cuando haya terminado la instalación se copie la carpeta <code class="docutils literal notranslate"><span class="pre">java</span></code> en C:\</p></li>
-<li><p>Configura la variable de entorno JAVA_HOME (Es muy importante):</p>
-<ul>
-<li><p>Windows:</p>
-<ul>
-<li><p>Busca “Variables de entorno” en el menú de inicio.</p></li>
-<li><p>Haz clic en “Variables de entorno.”.</p>
-<a class="reference internal image-reference" href="../_images/Variables_entorno_1.png"><img alt="numpy" class="align-center" src="../_images/Variables_entorno_1.png" style="width: 500px;" />
-</a>
-</li>
-<li><p>En “Variables del sistema”, haz clic en «Nueva».</p></li>
-<li><p>Nombre de la variable: JAVA_HOME</p></li>
-<li><p>Valor de la variable: La ruta donde instalaste el JDK (ej., C:\Java\jdk1.8.0_202) sin seleccionar la carpeta bin.</p></li>
-<li><p>Haz clic en Ok.</p>
-<a class="reference internal image-reference" href="../_images/Variables_entorno_2.png"><img alt="numpy" class="align-center" src="../_images/Variables_entorno_2.png" style="width: 500px;" />
-</a>
-</li>
-<li><p>En variables del sistema ubicas «path» y haz click en editar.</p></li>
-<li><p>en editar la variable de entorno das click en el boton «Nueva» y escribes el mismo nombre de la variable creada de esta forma %JAVA_HOME%\bin, es muy importante que especifiques la ruta final «\bin».</p></li>
-<li><p>Haz clic en Aceptar.</p>
-<a class="reference internal image-reference" href="../_images/Variables_entorno_3.png"><img alt="numpy" class="align-center" src="../_images/Variables_entorno_3.png" style="width: 500px;" />
-</a>
-</li>
+<section id="declaracion-y-exploracion-de-series-y-dataframes">
+<h2>Declaración y exploración de series y dataframes<a class="headerlink" href="#declaracion-y-exploracion-de-series-y-dataframes" title="Link to this heading">#</a></h2>
+<p>A continuación, una explicación sobre cómo declarar o crear <em>Series</em> y <em>DataFrames</em> en <em>pandas</em>:</p>
+<section id="series">
+<h3>Series<a class="headerlink" href="#series" title="Link to this heading">#</a></h3>
+<p>Una <em>Serie</em> es un arreglo unidimensional con etiquetas (índices) que pueden asociarse a cada valor. Es similar a una columna en una tabla de datos. A continuación se muestran las formas de creación de una Serie:</p>
+<ul class="simple">
+<li><p><strong>A partir de una lista o arreglo de Python</strong>:</p></li>
 </ul>
-</li>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>  
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">])</span>  
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    10
+1    20
+2    30
+3    40
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Especificando índices personalizados</strong>:</p></li>
 </ul>
-</li>
-</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">])</span>  
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a    10
+b    20
+c    30
+d    40
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>A partir de un diccionario</strong>:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="mi">300</span><span class="p">})</span>  
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x    100
+y    200
+z    300
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
 </section>
-<section id="paso-2-descargar-el-spark-y-ubicarlo-en-c">
-<h4>Paso 2: Descargar el Spark y ubicarlo en C:\<a class="headerlink" href="#paso-2-descargar-el-spark-y-ubicarlo-en-c" title="Link to this heading">#</a></h4>
-<ol class="arabic simple">
-<li><p>Ir al sitio <a class="reference external" href="https://archive.apache.org/dist/spark/spark-3.2.4/">https://archive.apache.org/dist/spark/spark-3.2.4/</a> y descargar el archivo <code class="docutils literal notranslate"><span class="pre">spark-3.2.4-bin-hadoop2.7.tgz</span></code> pesa 260M</p></li>
-</ol>
-<a class="reference internal image-reference" href="../_images/Descargar_spark_1.png"><img alt="numpy" class="align-center" src="../_images/Descargar_spark_1.png" style="width: 500px;" />
-</a>
-<ol class="arabic simple" start="2">
-<li><p>Descomprimir y ubicar la carpeta en la raiz del disco donde está instalado el sistema operativo, comunmente es C:\</p></li>
-<li><p>Configurar las variables de entorno para este componente, la variable se debe llamar SPARK_HOME y se deben seguir los mismos pasos que se delinearon en la configuración de la variable JAVA_HOME.</p></li>
-</ol>
-</section>
-<section id="paso-3-descargar-el-hadoop-y-ubicarlo-en-c-winutils-exe">
-<h4>Paso 3: Descargar el Hadoop y ubicarlo en C:\ «winutils.exe»<a class="headerlink" href="#paso-3-descargar-el-hadoop-y-ubicarlo-en-c-winutils-exe" title="Link to this heading">#</a></h4>
-<ol class="arabic simple">
-<li><p>ir al sitio <a class="github reference external" href="https://github.com/cdarlint/winutils/tree/master/hadoop-2.7.2/bin">cdarlint/winutils</a></p></li>
-<li><p>ubicar el archivo winutils.exe y descargarlo.</p></li>
-</ol>
-<a class="reference internal image-reference" href="../_images/Descar_hadoop.png"><img alt="numpy" class="align-center" src="../_images/Descar_hadoop.png" style="width: 500px;" />
-</a>
-<ol class="arabic simple" start="3">
-<li><p>Crear una carpeta en el disco C:\ con el nombre de «Hadoop» y una vez dentro de la carpeta creamos otra con el nombre de «bin» para ubicar el archivo descargado en esta ubicación.</p></li>
-<li><p>Se configuran las variables de entorno para este componente, la variable se debe llamar HADOOP_HOME y se deben seguir los mismos pasos que se especificaron en la configuración de la variable JAVA_HOME.</p></li>
-</ol>
-</section>
-<section id="paso-4-instalar-findspark-y-pyspark">
-<h4>Paso 4: Instalar findspark y pyspark<a class="headerlink" href="#paso-4-instalar-findspark-y-pyspark" title="Link to this heading">#</a></h4>
-<p>Es importante instalar findspark ya que cumple el papel de comunicarse y configurar el script automaticamente con las variables de entorno. Pyspark que cumple el papel de unir a Apache spark con python, conviritendolo en un motor de procesamiento de datos distribuido y de alto rendimiento.</p>
-<p>La instalación es recomendable hacerla en el <code class="docutils literal notranslate"><span class="pre">Prompt</span> <span class="pre">de</span> <span class="pre">Anaconda</span></code> mediante las siguientes instrucciones:</p>
-<p>Primero es importante crear un entorno para las librerias de Spark, pueden nombrarlo <code class="docutils literal notranslate"><span class="pre">Pyspark</span></code>, recordemos como se hace:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crear un entorno en anaconda prompt con el nombre Pyspark</span>
-conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>Pyspark
+<section id="dataframe">
+<h3>DataFrame<a class="headerlink" href="#dataframe" title="Link to this heading">#</a></h3>
+<p>Un <em>DataFrame</em> es una estructura bidimensional que puede entenderse como una tabla de datos con filas y columnas. Cada columna es una <em>Serie</em> y todas comparten el mismo índice de filas. A continuación se muestran las formas de creación de un DataFrame:</p>
+<ul class="simple">
+<li><p><strong>A partir de un diccionario de listas o arreglos</strong>: Las claves del diccionario se convierten en nombres de columna:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Nombre&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Ana&quot;</span><span class="p">,</span> <span class="s2">&quot;Luis&quot;</span><span class="p">,</span> <span class="s2">&quot;Marta&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;Edad&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">23</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">29</span><span class="p">],</span>
+    <span class="s2">&quot;Ciudad&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Bogotá&quot;</span><span class="p">,</span> <span class="s2">&quot;Medellín&quot;</span><span class="p">,</span> <span class="s2">&quot;Cali&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>  
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Posteriormente debes activar el entorno creado para localizarte en él y poder hacer las instalaciones requeridas:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Activando el entorno creado para proceder con la instalación de R</span>
-conda<span class="w"> </span>activate<span class="w"> </span>Pyspark
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Nombre  Edad    Ciudad
+0    Ana    23    Bogotá
+1   Luis    34  Medellín
+2  Marta    29      Cali
 </pre></div>
 </div>
-<p><strong>Segundo instalar pyspark</strong>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Instalar PySpark con conda</span>
-conda<span class="w"> </span>install<span class="w"> </span>pyspark
-</pre></div>
 </div>
-<p><strong>Y después instalar findspark</strong>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Instalar Findspark con conda</span>
-conda<span class="w"> </span>install<span class="w"> </span>findspark
-</pre></div>
 </div>
-<div class="tip admonition">
-<p class="admonition-title">Tip</p>
-<p>O también está la posibilidad de crear el entorno <code class="docutils literal notranslate"><span class="pre">Pyspark</span></code> con la primera letra en mayúscula para diferencialo de la libreria pyspark y en el mismo comando instalar pyspark y findspark y una versión de python <code class="docutils literal notranslate"><span class="pre">3.10</span></code> menor para mejorar la compatibilidad con la versíon de Apache spark 3.2.6</p>
-</div>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>Pyspark<span class="w"> </span>pyspark<span class="w"> </span>findspark<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10<span class="w"> </span><span class="c1"># Crea el entorno de Pyspark e instala findspark y pyspark y python 3.10</span>
-conda<span class="w"> </span>activate<span class="w"> </span>Pyspark<span class="w">                                </span><span class="c1"># Activar el entorno Pyspark</span>
-jupyter<span class="w"> </span>lab<span class="w">                                           </span><span class="c1"># para ejecutar el notebook de jupyter lab</span>
-</pre></div>
-</div>
-<p><em>Se han listado las dos biblitecas necesarias para que funcione Pyspark, puedes instalar las librerias que sean requeridas para trabajar otros temas</em>.</p>
-</section>
-<section id="paso-5-configurar-en-un-ide-la-conexion-de-spark-con-pyspark">
-<h4>Paso 5: Configurar en un IDE la conexión de Spark con pyspark<a class="headerlink" href="#paso-5-configurar-en-un-ide-la-conexion-de-spark-con-pyspark" title="Link to this heading">#</a></h4>
-<p>Se debe abrir jupyter lab desde el <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">Prompt</span></code> desde el entorno de Pyspark con la instrucción.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>jupyter<span class="w"> </span>lab
-</pre></div>
-</div>
-<p>Una vez escojas python como kernel ejecuta el siguiente código:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">findspark</span>                              <span class="c1"># Importa la librería para localizar Spark en el sistema</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>                                     <span class="c1"># Importa el módulo para interactuar con el sistema operativo</span>
-<span class="n">findspark</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>                              <span class="c1"># Inicializa findspark para que Python encuentre Spark</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pyspark</span>                                <span class="c1"># Importa la librería principal de PySpark</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyspark.sql</span><span class="w"> </span><span class="kn">import</span> <span class="n">SparkSession</span>          <span class="c1"># Importa la clase SparkSession para trabajar con DataFrames</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyspark.sql.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">StructType</span><span class="p">,</span> <span class="n">StructField</span><span class="p">,</span> <span class="n">IntegerType</span><span class="p">,</span> <span class="n">StringType</span>  <span class="c1"># Importa tipos de datos</span>
-<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>   <span class="c1"># Crea o recupera una sesión de Spark existente</span>
-<span class="n">spark</span>                                         <span class="c1"># Muestra información de la sesión de Spark activa</span>
-</pre></div>
-</div>
-<p>y sí ejecuta el siguiente resultado:</p>
-<a class="reference internal image-reference" href="../_images/Exec_pyspark.png"><img alt="numpy" class="align-center" src="../_images/Exec_pyspark.png" style="width: 500px;" />
-</a>
-<p>Pyspark está listo para ser probado, puede utilizar el siguiente código para hacer la prueba:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crear datos de ejemplo: ventas de productos</span>
-<span class="n">datos</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Laptop&quot;</span><span class="p">,</span> <span class="s2">&quot;Electronica&quot;</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
-    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;Mouse&quot;</span><span class="p">,</span> <span class="s2">&quot;Electronica&quot;</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span>
-    <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;Teclado&quot;</span><span class="p">,</span> <span class="s2">&quot;Electronica&quot;</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
-    <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;Silla&quot;</span><span class="p">,</span> <span class="s2">&quot;Muebles&quot;</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
-    <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;Escritorio&quot;</span><span class="p">,</span> <span class="s2">&quot;Muebles&quot;</span><span class="p">,</span> <span class="mi">800</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
-    <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;Monitor&quot;</span><span class="p">,</span> <span class="s2">&quot;Electronica&quot;</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span>
-    <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;Lampara&quot;</span><span class="p">,</span> <span class="s2">&quot;Iluminacion&quot;</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+<ul class="simple">
+<li><p><strong>A partir de una lista de diccionarios</strong>: Cada diccionario representa una fila de datos:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&quot;Nombre&quot;</span><span class="p">:</span> <span class="s2">&quot;Ana&quot;</span><span class="p">,</span> <span class="s2">&quot;Edad&quot;</span><span class="p">:</span> <span class="mi">23</span><span class="p">,</span> <span class="s2">&quot;Ciudad&quot;</span><span class="p">:</span> <span class="s2">&quot;Bogotá&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;Nombre&quot;</span><span class="p">:</span> <span class="s2">&quot;Luis&quot;</span><span class="p">,</span> <span class="s2">&quot;Edad&quot;</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span> <span class="s2">&quot;Ciudad&quot;</span><span class="p">:</span> <span class="s2">&quot;Medellín&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;Nombre&quot;</span><span class="p">:</span> <span class="s2">&quot;Marta&quot;</span><span class="p">,</span> <span class="s2">&quot;Edad&quot;</span><span class="p">:</span> <span class="mi">29</span><span class="p">,</span> <span class="s2">&quot;Ciudad&quot;</span><span class="p">:</span> <span class="s2">&quot;Cali&quot;</span><span class="p">}</span>
 <span class="p">]</span>
-
-<span class="c1"># Definir el esquema explícitamente</span>
-<span class="n">schema</span> <span class="o">=</span> <span class="n">StructType</span><span class="p">([</span>                         <span class="c1"># Define la estructura del DataFrame</span>
-    <span class="n">StructField</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">IntegerType</span><span class="p">(),</span> <span class="kc">True</span><span class="p">),</span>
-    <span class="n">StructField</span><span class="p">(</span><span class="s2">&quot;producto&quot;</span><span class="p">,</span> <span class="n">StringType</span><span class="p">(),</span> <span class="kc">True</span><span class="p">),</span>
-    <span class="n">StructField</span><span class="p">(</span><span class="s2">&quot;categoria&quot;</span><span class="p">,</span> <span class="n">StringType</span><span class="p">(),</span> <span class="kc">True</span><span class="p">),</span>
-    <span class="n">StructField</span><span class="p">(</span><span class="s2">&quot;precio&quot;</span><span class="p">,</span> <span class="n">IntegerType</span><span class="p">(),</span> <span class="kc">True</span><span class="p">),</span>
-    <span class="n">StructField</span><span class="p">(</span><span class="s2">&quot;cantidad&quot;</span><span class="p">,</span> <span class="n">IntegerType</span><span class="p">(),</span> <span class="kc">True</span><span class="p">)</span>
-<span class="p">])</span>
-
-<span class="c1"># Crear el DataFrame con esquema explícito</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">datos</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span>     <span class="c1"># Crea un DataFrame con esquema definido</span>
-
-<span class="c1"># Registrar el DataFrame como tabla temporal SQL</span>
-<span class="n">df</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="s2">&quot;ventas&quot;</span><span class="p">)</span>          <span class="c1"># Crea una vista temporal llamada &#39;ventas&#39;</span>
-
-<span class="c1"># Ver los datos</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== Datos Originales ===&quot;</span><span class="p">)</span>
-<span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM ventas&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>      <span class="c1"># Consulta SQL básica</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>  
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Si aparece el resultado despues del comando <code class="docutils literal notranslate"><span class="pre">show()</span></code> como se ve en la siguiente imagen, es porque la compatibilidad de los componentes instalados funcionan perfectamente.</p>
-<a class="reference internal image-reference" href="../_images/Datos_pyspark.png"><img alt="numpy" class="align-center" src="../_images/Datos_pyspark.png" style="width: 500px;" />
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Nombre  Edad    Ciudad
+0    Ana    23    Bogotá
+1   Luis    34  Medellín
+2  Marta    29      Cali
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>A partir de un arreglo de NumPy</strong>: Se pueden combinar con etiquetas de columnas y filas:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>  
+
+<span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>  
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">])</span>  
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   A  B  C
+0  1  2  3
+1  4  5  6
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Creación vacía y llenado posterior</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Nombre&quot;</span><span class="p">,</span> <span class="s2">&quot;Edad&quot;</span><span class="p">,</span> <span class="s2">&quot;Ciudad&quot;</span><span class="p">])</span>  
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Empty DataFrame
+Columns: [Nombre, Edad, Ciudad]
+Index: []
+</pre></div>
+</div>
+</div>
+</div>
+<p>En resumen, <em>Series</em> representan datos unidimensionales con índices, mientras que los <em>DataFrames</em> permiten trabajar con información tabular de múltiples dimensiones. Estas estructuras constituyen la base para casi todas las operaciones de manipulación y análisis en <em>pandas</em>.</p>
+<a class="reference internal image-reference" href="../_images/graph.png"><img alt="numpy" class="align-center" src="../_images/graph.png" style="width: 175px;" />
 </a>
-<p>Con la instalación de Miniconda, Python y PySpark, has dado el primer paso hacia un entorno de trabajo en big data, reproducible y escalable para el análisis de datos. Este manual ha sido diseñado para guiarte con claridad y precisión, anticipando los puntos críticos que suelen generar dudas en la configuración inicial.</p>
-<p>Recuerden que cada entorno virtual que creen será una cápsula de trabajo independiente, ideal para mantener tus proyectos organizados y tus dependencias bajo control. Esta práctica no solo mejora la estabilidad de tus desarrollos, sino que también facilita la colaboración y la documentación técnica.</p>
-<p>Este documento forma parte de un esfuerzo continuo por hacer que la tecnología sea más accesible.</p>
-<p>Gracias por seguir este recorrido.</p>
-<p>Autor: <strong>Steven Cifuentes Rugeles</strong>.</p>
-<p>Fecha: Octubre de 2025</p>
-<p><em>Documentación para consultar biblioteca de pyspark</em>: <a class="reference external" href="https://sparkbyexamples.com/pyspark-tutorial/">https://sparkbyexamples.com/pyspark-tutorial/</a></p>
+<p style="text-align: center; font-size: 8px;">
+    <a href="https://www.flaticon.com/free-icons/index" title="index icons">Index icons created by Nixxdsgn - Flaticon</a>
+</p></section>
 </section>
+<section id="indexacion-y-slicing">
+<h2>Indexación y slicing<a class="headerlink" href="#indexacion-y-slicing" title="Link to this heading">#</a></h2>
+<p>Una vez creadas las estructuras de datos en <em>pandas</em> (Series y DataFrames), es fundamental aprender a acceder y seleccionar la información que contienen. Esto se logra mediante indexación y <em>slicing</em>.</p>
+<section id="indexacion-en-series">
+<h3>Indexación en <em>Series</em><a class="headerlink" href="#indexacion-en-series" title="Link to this heading">#</a></h3>
+<p>Una <em>Serie</em> tiene un índice asociado a cada valor, lo que permite acceder a los elementos de manera similar a los diccionarios o listas de Python.</p>
+<ul class="simple">
+<li><p><strong>Acceso por posición (entero)</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>  
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">])</span>  
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>      <span class="c1"># Accede al primer elemento -&gt; 10</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\steve\AppData\Local\Temp\ipykernel_7316\1624466824.py:4: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  print(s[0])      # Accede al primer elemento -&gt; 10
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Acceso por etiqueta (índice nombrado)</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="s2">&quot;c&quot;</span><span class="p">])</span>    <span class="c1"># Accede al elemento con índice &quot;c&quot; -&gt; 30</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>30
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Acceso a varios elementos</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">[[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">]])</span>   <span class="c1"># Devuelve una Serie con los índices &quot;a&quot; y &quot;d&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a    10
+d    40
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="slicing-en-series">
+<h3><em>Slicing</em> en <em>Series</em><a class="headerlink" href="#slicing-en-series" title="Link to this heading">#</a></h3>
+<p>Permite obtener subconjuntos de datos, ya sea por posición o por etiquetas.</p>
+<ul class="simple">
+<li><p><strong>Por posición (estilo listas de Python)</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>   <span class="c1"># Del índice 1 al 2 (excluye el 3)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b    20
+c    30
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Por etiquetas (incluye el final)</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="s2">&quot;b&quot;</span><span class="p">:</span><span class="s2">&quot;d&quot;</span><span class="p">])</span>   <span class="c1"># Incluye desde &quot;b&quot; hasta &quot;d&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b    20
+c    30
+d    40
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="indexacion-en-dataframes">
+<h3>Indexación en <em>DataFrames</em><a class="headerlink" href="#indexacion-en-dataframes" title="Link to this heading">#</a></h3>
+<p>En los <em>DataFrames</em>*, la selección puede hacerse por <em>filas</em> y/o <em>columnas</em>. Para ello, <em>pandas</em> ofrece principalmente dos métodos:</p>
+<ul class="simple">
+<li><p><strong>.loc[] → acceso por etiquetas</strong>: Selección de una fila por índice:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;Nombre&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Ana&quot;</span><span class="p">,</span> <span class="s2">&quot;Luis&quot;</span><span class="p">,</span> <span class="s2">&quot;Marta&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;Edad&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">23</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">29</span><span class="p">],</span>
+    <span class="s2">&quot;Ciudad&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Bogotá&quot;</span><span class="p">,</span> <span class="s2">&quot;Medellín&quot;</span><span class="p">,</span> <span class="s2">&quot;Cali&quot;</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>        <span class="c1"># Fila con índice 0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;Edad&quot;</span><span class="p">])</span> <span class="c1"># Toda la columna &quot;Edad&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Nombre       Ana
+Edad          23
+Ciudad    Bogotá
+Name: 0, dtype: object
+0    23
+1    34
+2    29
+Name: Edad, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>.loc[] → acceso por etiquetas</strong>: Selección de un rango de filas y columnas:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Nombre&quot;</span><span class="p">,</span> <span class="s2">&quot;Edad&quot;</span><span class="p">]])</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Nombre  Edad
+0    Ana    23
+1   Luis    34
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>.iloc[]` → acceso por posición numérica</strong>: Selección de una fila:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>        <span class="c1"># Primera fila</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>     <span class="c1"># Segunda columna (Edad)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Nombre       Ana
+Edad          23
+Ciudad    Bogotá
+Name: 0, dtype: object
+0    23
+1    34
+2    29
+Name: Edad, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>.iloc[]` → acceso por posición numérica</strong>: Selección de un rango:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span> <span class="c1"># Primeras dos filas y dos columnas</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Nombre  Edad
+0    Ana    23
+1   Luis    34
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">loc</span></code> incluye el índice final, mientras que <code class="docutils literal notranslate"><span class="pre">iloc</span></code> lo excluye</strong>, igual que en las listas de Python. Es posible combinar condiciones para filtrar datos:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Edad&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">25</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Nombre&quot;</span><span class="p">,</span> <span class="s2">&quot;Ciudad&quot;</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Nombre    Ciudad
+1   Luis  Medellín
+2  Marta      Cali
+</pre></div>
+</div>
+</div>
+</div>
+<a class="reference internal image-reference" href="../_images/table.png"><img alt="numpy" class="align-center" src="../_images/table.png" style="width: 175px;" />
+</a>
+<p style="text-align: center; font-size: 8px;">
+    <a href="https://www.flaticon.com/free-icons/excel" title="excel icons">Excel icons created by Freepik - Flaticon</a>
+</p></section>
+</section>
+<section id="eliminacion-de-filas-y-columnas">
+<h2>Eliminación de filas y columnas<a class="headerlink" href="#eliminacion-de-filas-y-columnas" title="Link to this heading">#</a></h2>
+<p>En el trabajo con datos, es frecuente que se requiera descartar filas o columnas que no son necesarias para el análisis. La librería <em>pandas</em> facilita esta tarea a través del método <em><code class="docutils literal notranslate"><span class="pre">drop()</span></code></em>, entre otras opciones.</p>
+<section id="eliminacion-de-filas">
+<h3>Eliminación de <em>filas</em><a class="headerlink" href="#eliminacion-de-filas" title="Link to this heading">#</a></h3>
+<p>Por defecto, el método <code class="docutils literal notranslate"><span class="pre">drop()</span></code> elimina <em>filas</em> si se especifica su índice.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>  
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;Nombre&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Ana&quot;</span><span class="p">,</span> <span class="s2">&quot;Luis&quot;</span><span class="p">,</span> <span class="s2">&quot;Marta&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;Edad&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">23</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">29</span><span class="p">],</span>
+    <span class="s2">&quot;Ciudad&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Bogotá&quot;</span><span class="p">,</span> <span class="s2">&quot;Medellín&quot;</span><span class="p">,</span> <span class="s2">&quot;Cali&quot;</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="c1"># Eliminar la fila con índice 1</span>
+<span class="n">df_filas</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_filas</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Nombre  Edad  Ciudad
+0    Ana    23  Bogotá
+2  Marta    29    Cali
+</pre></div>
+</div>
+</div>
+</div>
+<p>El DataFrame original no se modifica a menos que se use el parámetro <code class="docutils literal notranslate"><span class="pre">inplace=True</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="eliminacion-de-columnas">
+<h3>Eliminación de <em>columnas</em><a class="headerlink" href="#eliminacion-de-columnas" title="Link to this heading">#</a></h3>
+<p>Para eliminar columnas se utiliza el parámetro <code class="docutils literal notranslate"><span class="pre">axis=1</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Eliminar la columna &quot;Ciudad&quot;</span>
+<span class="n">df_columnas</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;Ciudad&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_columnas</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Nombre  Edad
+0    Ana    23
+2  Marta    29
+</pre></div>
+</div>
+</div>
+</div>
+<p>También se pueden eliminar varias columnas a la vez:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_varias</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;Edad&quot;</span><span class="p">,</span> <span class="s2">&quot;Ciudad&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="eliminacion-condicional-de-filas">
+<h3>Eliminación condicional de filas<a class="headerlink" href="#eliminacion-condicional-de-filas" title="Link to this heading">#</a></h3>
+<p>Es posible eliminar filas según una condición lógica. Por ejemplo, eliminar personas menores de 30 años:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_cond</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Edad&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">30</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_cond</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Empty DataFrame
+Columns: [Nombre, Edad, Ciudad]
+Index: []
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="eliminacion-de-valores-nulos-con-dropna">
+<h3>Eliminación de valores nulos con dropna()<a class="headerlink" href="#eliminacion-de-valores-nulos-con-dropna" title="Link to this heading">#</a></h3>
+<p>Además de <code class="docutils literal notranslate"><span class="pre">drop()</span></code>, pandas cuenta con métodos especializados para limpieza:</p>
+<ul class="simple">
+<li><p><strong>Eliminar filas con valores nulos</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_sin_nulos</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Eliminar columnas con valores nulos</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_sin_nulos_col</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<a class="reference internal image-reference" href="../_images/filtering.png"><img alt="numpy" class="align-center" src="../_images/filtering.png" style="width: 175px;" />
+</a>
+<p style="text-align: center; font-size: 8px;">
+    <a href="https://www.flaticon.com/free-icons/filtering" title="filtering icons">Filtering icons created by Freepik - Flaticon</a>
+</p></section>
+</section>
+<section id="agrupacion-de-filas">
+<h2>Agrupación de filas<a class="headerlink" href="#agrupacion-de-filas" title="Link to this heading">#</a></h2>
+<p>En análisis de datos, muchas veces no basta con tener la información fila por fila: necesitamos <em>resumirla</em>, <em>clasificarla</em> u <em>obtener estadísticas</em> a partir de grupos. Para ello, <em>pandas</em> ofrece las operaciones de <em>agrupación</em> (<em>grouping</em>) y <em>agregación</em> (<em>aggregation</em>).</p>
+<section id="agrupacion-con-groupby">
+<h3>Agrupación con groupby()<a class="headerlink" href="#agrupacion-con-groupby" title="Link to this heading">#</a></h3>
+<p>El método <strong><code class="docutils literal notranslate"><span class="pre">groupby()</span></code></strong> permite dividir un DataFrame en grupos basados en los valores de una o más columnas. Ejemplo:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>  
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;Ciudad&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Bogotá&quot;</span><span class="p">,</span> <span class="s2">&quot;Bogotá&quot;</span><span class="p">,</span> <span class="s2">&quot;Medellín&quot;</span><span class="p">,</span> <span class="s2">&quot;Cali&quot;</span><span class="p">,</span> <span class="s2">&quot;Cali&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;Ventas&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">180</span><span class="p">],</span>
+    <span class="s2">&quot;Vendedor&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Ana&quot;</span><span class="p">,</span> <span class="s2">&quot;Luis&quot;</span><span class="p">,</span> <span class="s2">&quot;Ana&quot;</span><span class="p">,</span> <span class="s2">&quot;Marta&quot;</span><span class="p">,</span> <span class="s2">&quot;Luis&quot;</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="c1"># Agrupar por ciudad</span>
+<span class="n">grupo</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;Ciudad&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">grupo</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x0000025860BFF4D0&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>El resultado de <code class="docutils literal notranslate"><span class="pre">groupby()</span></code> no es un DataFrame directo, sino un objeto agrupado que se puede combinar con operaciones posteriores.</p>
+</section>
+<section id="agregacion-de-datos">
+<h3>Agregación de datos<a class="headerlink" href="#agregacion-de-datos" title="Link to this heading">#</a></h3>
+<p>Una vez definidos los grupos, se pueden aplicar funciones de agregación para obtener estadísticas:</p>
+<ul class="simple">
+<li><p><strong>Funciones comunes</strong> (<code class="docutils literal notranslate"><span class="pre">sum</span></code>, <code class="docutils literal notranslate"><span class="pre">mean</span></code>, <code class="docutils literal notranslate"><span class="pre">count</span></code>, <code class="docutils literal notranslate"><span class="pre">max</span></code>, <code class="docutils literal notranslate"><span class="pre">min</span></code>):</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Suma de ventas por ciudad</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;Ciudad&quot;</span><span class="p">)[</span><span class="s2">&quot;Ventas&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+
+<span class="c1"># Promedio de ventas por ciudad</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;Ciudad&quot;</span><span class="p">)[</span><span class="s2">&quot;Ventas&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ciudad
+Bogotá      300
+Cali        300
+Medellín    150
+Name: Ventas, dtype: int64
+Ciudad
+Bogotá      150.0
+Cali        150.0
+Medellín    150.0
+Name: Ventas, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Varias funciones a la vez</strong>:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;Ciudad&quot;</span><span class="p">)[</span><span class="s2">&quot;Ventas&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s2">&quot;sum&quot;</span><span class="p">,</span> <span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>          sum   mean  max
+Ciudad                   
+Bogotá    300  150.0  200
+Cali      300  150.0  180
+Medellín  150  150.0  150
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="agrupacion-por-multiples-columnas">
+<h3>Agrupación por múltiples columnas<a class="headerlink" href="#agrupacion-por-multiples-columnas" title="Link to this heading">#</a></h3>
+<p>También es posible agrupar usando más de una columna:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Agrupar por Ciudad y Vendedor</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;Ciudad&quot;</span><span class="p">,</span> <span class="s2">&quot;Vendedor&quot;</span><span class="p">])[</span><span class="s2">&quot;Ventas&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ciudad    Vendedor
+Bogotá    Ana         100
+          Luis        200
+Cali      Luis        180
+          Marta       120
+Medellín  Ana         150
+Name: Ventas, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Esto genera una tabla con índice jerárquico (MultiIndex).</p>
+</section>
+<section id="uso-de-agg-para-personalizar-agregaciones">
+<h3>Uso de agg() para personalizar agregaciones<a class="headerlink" href="#uso-de-agg-para-personalizar-agregaciones" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">agg()</span></code> permite aplicar diferentes funciones a distintas columnas:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">resumen</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;Ciudad&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span>
+    <span class="s2">&quot;Ventas&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;sum&quot;</span><span class="p">,</span> <span class="s2">&quot;mean&quot;</span><span class="p">],</span>      <span class="c1"># sumar y promediar ventas</span>
+    <span class="s2">&quot;Vendedor&quot;</span><span class="p">:</span> <span class="s2">&quot;count&quot;</span>             <span class="c1"># contar vendedores</span>
+<span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">resumen</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>         Ventas        Vendedor
+            sum   mean    count
+Ciudad                         
+Bogotá      300  150.0        2
+Cali        300  150.0        2
+Medellín    150  150.0        1
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="reiniciar-el-indice-despues-de-agrupar">
+<h3>Reiniciar el índice después de agrupar<a class="headerlink" href="#reiniciar-el-indice-despues-de-agrupar" title="Link to this heading">#</a></h3>
+<p>Por defecto, la columna usada para agrupar se convierte en índice. Para devolverla como columna normal:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">resultado</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;Ciudad&quot;</span><span class="p">)[</span><span class="s2">&quot;Ventas&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">resultado</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     Ciudad  Ventas
+0    Bogotá     300
+1      Cali     300
+2  Medellín     150
+</pre></div>
+</div>
+</div>
+</div>
+<a class="reference internal image-reference" href="../_images/grouping.png"><img alt="numpy" class="align-center" src="../_images/grouping.png" style="width: 175px;" />
+</a>
+<p style="text-align: center; font-size: 8px;">
+    <a href="https://www.flaticon.com/free-icons/outlier" title="outlier icons">Outlier icons created by mia elysia - Flaticon</a>
+</p></section>
+</section>
+<section id="concatenacion-y-merge">
+<h2>Concatenación y merge<a class="headerlink" href="#concatenacion-y-merge" title="Link to this heading">#</a></h2>
+<p>En el análisis de datos, es común que la información se encuentre distribuida en diferentes tablas o estructuras. Para trabajar con ella de manera integrada, <em>pandas</em> ofrece mecanismos para <em>combinar</em> datos: la <em>concatenación</em> y el <em>merge</em>.</p>
+<section id="concatenacion-con-pd-concat">
+<h3>Concatenación con pd.concat()<a class="headerlink" href="#concatenacion-con-pd-concat" title="Link to this heading">#</a></h3>
+<p>La función <strong><code class="docutils literal notranslate"><span class="pre">concat()</span></code></strong> permite unir objetos de <em>pandas</em> (Series o DataFrames) de manera vertical (uno debajo del otro) u horizontal (uno al lado del otro).</p>
+<ul class="simple">
+<li><p><strong>Concatenación vertical (apilar filas)</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>  
+
+<span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;ID&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+    <span class="s2">&quot;Nombre&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Ana&quot;</span><span class="p">,</span> <span class="s2">&quot;Luis&quot;</span><span class="p">,</span> <span class="s2">&quot;Marta&quot;</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;ID&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+    <span class="s2">&quot;Nombre&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Carlos&quot;</span><span class="p">,</span> <span class="s2">&quot;Elena&quot;</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="n">df_concat</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_concat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   ID  Nombre
+0   1     Ana
+1   2    Luis
+2   3   Marta
+0   4  Carlos
+1   5   Elena
+</pre></div>
+</div>
+</div>
+</div>
+<p>Se agregan las filas de <code class="docutils literal notranslate"><span class="pre">df2</span></code> debajo de las de <code class="docutils literal notranslate"><span class="pre">df1</span></code>.</p>
+<ul class="simple">
+<li><p><strong>Concatenación horizontal (unir columnas)</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;Edad&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">23</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">29</span><span class="p">],</span>
+    <span class="s2">&quot;Ciudad&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Bogotá&quot;</span><span class="p">,</span> <span class="s2">&quot;Medellín&quot;</span><span class="p">,</span> <span class="s2">&quot;Cali&quot;</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="n">df_horiz</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df1</span><span class="p">,</span> <span class="n">df3</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_horiz</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   ID Nombre  Edad    Ciudad
+0   1    Ana    23    Bogotá
+1   2   Luis    34  Medellín
+2   3  Marta    29      Cali
+</pre></div>
+</div>
+</div>
+</div>
+<p>Aquí, las columnas se pegan una al lado de la otra, alineadas por el índice.</p>
+</section>
+<section id="merge-con-pd-merge">
+<h3><em>Merge</em> con pd.merge()<a class="headerlink" href="#merge-con-pd-merge" title="Link to this heading">#</a></h3>
+<p>El método <strong><code class="docutils literal notranslate"><span class="pre">merge()</span></code></strong> permite combinar DataFrames de manera similar a un <em>join</em> en bases de datos relacionales. Se basa en claves comunes (columnas).</p>
+<ul class="simple">
+<li><p><strong>Inner join (intersección)</strong>: Devuelve solo las filas con ID en común en ambos DataFrames.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_ventas</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;ID&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+    <span class="s2">&quot;Ventas&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">300</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="n">df_clientes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;ID&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+    <span class="s2">&quot;Nombre&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Ana&quot;</span><span class="p">,</span> <span class="s2">&quot;Luis&quot;</span><span class="p">,</span> <span class="s2">&quot;Marta&quot;</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="n">df_inner</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_clientes</span><span class="p">,</span> <span class="n">df_ventas</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;ID&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;inner&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_inner</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   ID Nombre  Ventas
+0   1    Ana     100
+1   2   Luis     200
+2   3  Marta     150
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Left join (todos los de la izquierda)</strong>: Devuelve todos los clientes, aunque no tengan ventas asociadas.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_left</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_clientes</span><span class="p">,</span> <span class="n">df_ventas</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;ID&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_left</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   ID Nombre  Ventas
+0   1    Ana     100
+1   2   Luis     200
+2   3  Marta     150
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Right join (todos los de la derecha)</strong>:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_right</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_clientes</span><span class="p">,</span> <span class="n">df_ventas</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;ID&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_right</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   ID Nombre  Ventas
+0   1    Ana     100
+1   2   Luis     200
+2   3  Marta     150
+3   4    NaN     300
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Outer join (unión completa)</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_outer</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_clientes</span><span class="p">,</span> <span class="n">df_ventas</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;ID&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;outer&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_outer</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   ID Nombre  Ventas
+0   1    Ana     100
+1   2   Luis     200
+2   3  Marta     150
+3   4    NaN     300
+</pre></div>
+</div>
+</div>
+</div>
+<p>Devuelve todos los registros, incluso si no coinciden en ambos DataFrames (rellenando con <code class="docutils literal notranslate"><span class="pre">NaN</span></code> donde no hay correspondencia).</p>
+<a class="reference internal image-reference" href="../_images/join.png"><img alt="numpy" class="align-center" src="../_images/join.png" style="width: 175px;" />
+</a>
+<p style="text-align: center; font-size: 8px;">
+    <a href="https://www.flaticon.com/free-icons/combine" title="combine icons">Combine icons created by orvipixel - Flaticon</a>
+</p></section>
+</section>
+<section id="reshape-y-de-tabla-de-contingencia">
+<h2>Reshape y de tabla de contingencia<a class="headerlink" href="#reshape-y-de-tabla-de-contingencia" title="Link to this heading">#</a></h2>
+<p>Cuando se trabaja con conjuntos de datos, muchas veces se necesita resumir la información en forma de tabla, calculando totales o promedios de manera agrupada. Para esto, <em>pandas</em> ofrece dos funciones poderosas: <em><code class="docutils literal notranslate"><span class="pre">pivot_table()</span></code></em> y <em><code class="docutils literal notranslate"><span class="pre">crosstab()</span></code></em>.</p>
+<p>La función <em><code class="docutils literal notranslate"><span class="pre">pivot_table()</span></code></em> permite crear tablas dinámicas similares a las de Excel. Se utiliza para reorganizar y resumir datos a partir de un DataFrame. Sintaxis básica:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">aggfunc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">37</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">pd</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">aggfunc</span><span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;values&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>data</em> → DataFrame de origen. <em>values</em> → columna(s) numéricas a resumir. <em>index</em> → filas de la tabla. <em>columns</em> → columnas de la tabla. <em>aggfunc</em> → función de agregación (ej: sum, mean, count).</p>
+<p>Esto muestra el total de ventas por <em>Ciudad</em> (filas) y <em>Vendedor</em> (columnas).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>  
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;Ciudad&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Bogotá&quot;</span><span class="p">,</span> <span class="s2">&quot;Bogotá&quot;</span><span class="p">,</span> <span class="s2">&quot;Medellín&quot;</span><span class="p">,</span> <span class="s2">&quot;Cali&quot;</span><span class="p">,</span> <span class="s2">&quot;Cali&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;Vendedor&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Ana&quot;</span><span class="p">,</span> <span class="s2">&quot;Luis&quot;</span><span class="p">,</span> <span class="s2">&quot;Ana&quot;</span><span class="p">,</span> <span class="s2">&quot;Marta&quot;</span><span class="p">,</span> <span class="s2">&quot;Luis&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;Ventas&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">180</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="n">tabla</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s2">&quot;Ventas&quot;</span><span class="p">,</span>
+                       <span class="n">index</span><span class="o">=</span><span class="s2">&quot;Ciudad&quot;</span><span class="p">,</span>
+                       <span class="n">columns</span><span class="o">=</span><span class="s2">&quot;Vendedor&quot;</span><span class="p">,</span>
+                       <span class="n">aggfunc</span><span class="o">=</span><span class="s2">&quot;sum&quot;</span><span class="p">,</span>
+                       <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tabla</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>La función <em><code class="docutils literal notranslate"><span class="pre">crosstab()</span></code></em> crea una tabla de contingencia que muestra <em>frecuencias</em> (conteo de ocurrencias). Es muy útil para análisis de variables categóricas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>index</em> → categorías en filas. <em>columns</em> → categorías en columnas. <em>values + aggfunc</em> (opcional) → para resumir valores numéricos en lugar de contar. Por ejemplo aquí, se muestra cuántas veces aparece cada vendedor en cada ciudad.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Conteo de vendedores por ciudad</span>
+<span class="n">tabla_frec</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Ciudad&quot;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Vendedor&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tabla_frec</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Con valores y función de agregación:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Suma de ventas por ciudad y vendedor</span>
+<span class="n">tabla_sum</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Ciudad&quot;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Vendedor&quot;</span><span class="p">],</span>
+                        <span class="n">values</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Ventas&quot;</span><span class="p">],</span>
+                        <span class="n">aggfunc</span><span class="o">=</span><span class="s2">&quot;sum&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tabla_sum</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="apendice">
+<h2>Apéndice<a class="headerlink" href="#apendice" title="Link to this heading">#</a></h2>
+<p>¡Gracias por su participación en el curso! Lo esperamos en una siguiente oportunidad.</p>
+<section id="documentacion">
+<h3>Documentación<a class="headerlink" href="#documentacion" title="Link to this heading">#</a></h3>
+<p><a class="reference external" href="https://dokumen.pub/python-pandas-for-beginners-pandas-specialization-for-data-scientist-9781956591101-1956591109.html">Capítulo de introducción a la librería <em>pandas</em> (Capítulo 2)</a> <br>
+<a class="reference external" href="https://pandas.pydata.org/">Documentación de la librería pandas</a></p>
+</section>
+<section id="referencias">
+<h3>Referencias<a class="headerlink" href="#referencias" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>AI Publishing. (2021). Python Pandas for Beginners: Pandas Specialization for Data Scientist. AI Publishing LLC.</p></li>
+</ul>
+<p><i>Taller de Análisis y procesamiento de datos con Open Source</i> © 2025 by <a href="https://scholar.google.es/citations?user=PP7CT6IAAAAJ">Aníbal Montero</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nd.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"></p>
 </section>
 </section>
 </section>
@@ -750,7 +1365,7 @@ jupyter<span class="w"> </span>lab<span class="w">                              
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Visualización de datos</p>
+        <p class="prev-next-title">Manipulación de datos con numpy</p>
       </div>
     </a>
     <a class="right-next"
@@ -758,7 +1373,7 @@ jupyter<span class="w"> </span>lab<span class="w">                              
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Primeros pasos con pyspark</p>
+        <p class="prev-next-title">Visualización de datos</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -778,31 +1393,45 @@ jupyter<span class="w"> </span>lab<span class="w">                              
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Configurando un entorno de código abierto para procesar datos</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instrucciones">Instrucciones.</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-de-miniconda-y-python">Instalación de miniconda y python.</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-de-r-en-jupyter-lab-desde-anaconda-prompt">Instalación de R en jupyter lab desde anaconda prompt</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-del-problema">Análisis del Problema</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#declaracion-y-exploracion-de-series-y-dataframes">Declaración y exploración de series y dataframes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#series">Series</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dataframe">DataFrame</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexacion-y-slicing">Indexación y slicing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indexacion-en-series">Indexación en <em>Series</em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slicing-en-series"><em>Slicing</em> en <em>Series</em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indexacion-en-dataframes">Indexación en <em>DataFrames</em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eliminacion-de-filas-y-columnas">Eliminación de filas y columnas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eliminacion-de-filas">Eliminación de <em>filas</em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eliminacion-de-columnas">Eliminación de <em>columnas</em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eliminacion-condicional-de-filas">Eliminación condicional de filas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eliminacion-de-valores-nulos-con-dropna">Eliminación de valores nulos con dropna()</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agrupacion-de-filas">Agrupación de filas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#agrupacion-con-groupby">Agrupación con groupby()</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#agregacion-de-datos">Agregación de datos</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#agrupacion-por-multiples-columnas">Agrupación por múltiples columnas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uso-de-agg-para-personalizar-agregaciones">Uso de agg() para personalizar agregaciones</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reiniciar-el-indice-despues-de-agrupar">Reiniciar el índice después de agrupar</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#concatenacion-y-merge">Concatenación y merge</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#concatenacion-con-pd-concat">Concatenación con pd.concat()</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#merge-con-pd-merge"><em>Merge</em> con pd.merge()</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reshape-y-de-tabla-de-contingencia">Reshape y de tabla de contingencia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#apendice">Apéndice</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#documentacion">Documentación</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#referencias">Referencias</a></li>
 </ul>
 </li>
 </ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-de-pyspark-en-una-maquina-local-en-sistema-operativo-windows">Instalación de PySpark en una máquina local en sistema operativo Windows</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bienvenidos-al-mundo-de-la-mineria-de-datos">¡Bienvenidos, al mundo de la minería de datos!</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-y-configuracion">Instalación y configuración</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prerrequisitos">Prerrequisitos</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#paso-1-instalar-el-jdk-si-no-lo-tiene">Paso 1: Instalar el JDK si no lo tiene</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#paso-2-descargar-el-spark-y-ubicarlo-en-c">Paso 2: Descargar el Spark y ubicarlo en C:\</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#paso-3-descargar-el-hadoop-y-ubicarlo-en-c-winutils-exe">Paso 3: Descargar el Hadoop y ubicarlo en C:\ «winutils.exe»</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#paso-4-instalar-findspark-y-pyspark">Paso 4: Instalar findspark y pyspark</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#paso-5-configurar-en-un-ide-la-conexion-de-spark-con-pyspark">Paso 5: Configurar en un IDE la conexión de Spark con pyspark</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
   </nav></div>
 
 </div></div>
