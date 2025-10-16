@@ -36,20 +36,17 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-```{image} Imagenes/sparkjobs5.png
-:width: 840px
-:align: center
-:alt: numpy
+```{admonition} Recursos
+:class: nota
+- Notebook en Python: [Enlace a Googledrive](https://colab.research.google.com/drive/1Noj8Awd9pwPFzBMOa9O99BGusM4QxDrd?usp=sharing)
+- Notebook en R: [Enlace a Googledrive](https://colab.research.google.com/drive/1fXdimfDKkxc9E6g8_6-oNDHBIUnaZdmH?usp=sharing)
 ```
-<p style="text-align: center; font-size: 9px;">
-    Elaboración propia</a>
-</p>
 ------------------
 
 
-  [36mCell[39m[36m [39m[32mIn[1][39m[32m, line 2[39m
-[31m    [39m[31m:width: 840px[39m
-              ^
+  [36mCell[39m[36m [39m[32mIn[1][39m[32m, line 3[39m
+[31m    [39m[31m- Notebook en Python: [Enlace a Googledrive](https://colab.research.google.com/drive/1Noj8Awd9pwPFzBMOa9O99BGusM4QxDrd?usp=sharing)[39m
+                                                                                         ^
 [31mSyntaxError[39m[31m:[39m invalid decimal literal
 
 
