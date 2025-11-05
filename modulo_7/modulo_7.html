@@ -347,6 +347,7 @@ document.write(`
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Configurando un entorno de código abierto para procesar datos</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instrucciones">Instrucciones.</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-de-miniconda-y-python">Instalación de miniconda y python.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-de-python-instalacion-python">Instalación de python {#instalacion-python}</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-de-r-en-jupyter-lab-desde-anaconda-prompt">Instalación de R en jupyter lab desde anaconda prompt</a></li>
 </ul>
 </li>
@@ -381,6 +382,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="configurando-un-entorno-de-codigo-abierto-para-procesar-datos">
 <h1>Configurando un entorno de código abierto para procesar datos<a class="headerlink" href="#configurando-un-entorno-de-codigo-abierto-para-procesar-datos" title="Link to this heading">#</a></h1>
+<p>Antes de comenzar es importante considerar el espacio en disco que debe reservarse para la instalación, en descarga los archivos pueden llegar a alcanzar los 800 MB, instalados pueden alcanzar 1 GB, es importante borrar el cache una vez se hagan todas las instalaciones.</p>
 <section id="instrucciones">
 <h2>Instrucciones.<a class="headerlink" href="#instrucciones" title="Link to this heading">#</a></h2>
 <p>Con la siguientes indicaciones podrás instalar <strong>Miniconda, Python, R y Jupyter Lab</strong></p>
@@ -408,6 +410,9 @@ Ve al sitio oficial: <a class="reference external" href="https://www.anaconda.co
 <li><p>En el entorno (base) es importante hacer las instalaciones de uso general, como actualizar el conda, instalar python e instalar jupyter lab.</p></li>
 </ul>
 </div>
+</section>
+<section id="instalacion-de-python-instalacion-python">
+<h3>Instalación de python {#instalacion-python}<a class="headerlink" href="#instalacion-de-python-instalacion-python" title="Link to this heading">#</a></h3>
 <p>En el <code class="docutils literal notranslate"><span class="pre">prompt</span> <span class="pre">de</span> <span class="pre">anaconda</span></code> puedes utilizar las siguientes alternativas para instalar python, la primera es restringiendo la versión <code class="docutils literal notranslate"><span class="pre">3.10</span></code> y la segunda tomará la última versión</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Instalar una versión específica de Python en el entorno base</span>
 conda<span class="w"> </span>install<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.11
@@ -431,11 +436,8 @@ conda<span class="w"> </span>install<span class="w"> </span>pip
 </pre></div>
 </div>
 <p>JupyterLab es una interfaz de desarrollo interactiva y flexible para trabajar con notebooks, código, datos y documentación en un solo entorno. Es la evolución de Jupyter Notebook, diseñada para ser más potente, modular y extensible.</p>
-<p>Para instalar el jupyter lab en el <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">prompt</span></code> se deben ejecutar cualquiera de los siguientes comandos</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Instalar Jupyter Lab</span>
-conda<span class="w"> </span>install<span class="w"> </span>jupyterlab
-
-<span class="c1"># O una setencia más recomendable</span>
+<p>Para instalar el jupyter lab en el <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">prompt</span></code> se deben ejecutar el siguiente comando</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Para instalar Jupyter Lab</span>
 conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>jupyterlab
 </pre></div>
 </div>
@@ -524,7 +526,7 @@ jupyter<span class="w"> </span>kernelspec<span class="w"> </span>list
 <p class="admonition-title">Importante</p>
 <p>A continuación se listarán los insumos necesarios para empezar la instalación y configuración de pyspark, la versión propuesta ya ha sido instalada y probada, obteniendo resultados satisfactorios.</p>
 </div>
-<p>Antes de comenzar, asegúrate de tener lo siguiente instalado en tu sistema</p>
+<p>Asegúrate de tener lo siguiente instalado en tu sistema:</p>
 <ol class="arabic simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">python</span></code>.</p></li>
 </ol>
@@ -532,7 +534,7 @@ jupyter<span class="w"> </span>kernelspec<span class="w"> </span>list
 python<span class="w"> </span>--version
 </pre></div>
 </div>
-<p>Sí no aparece instalado python, ir a la sesión anterior e instalarlo.</p>
+<p>Sí no aparece instalado python, ir a la sesión anterior <a class="reference internal" href="#instalacion-python"><span class="xref myst">Instalación de Python</span></a> e instalarlo.</p>
 <ol class="arabic simple" start="2">
 <li><p>Java Development Kit <code class="docutils literal notranslate"><span class="pre">(JDK</span> <span class="pre">8)</span></code>: Spark está construido sobre la máquina virtual de Java (JVM), por lo que JDK es un requisito imprescindible</p></li>
 </ol>
@@ -545,7 +547,7 @@ java<span class="w"> </span>-version
 <ol class="arabic simple" start="3">
 <li><p>Descargar <code class="docutils literal notranslate"><span class="pre">Apache</span> <span class="pre">Spark</span></code> versión 3.2.4-bin-hadoop2.7</p></li>
 <li><p>Descargar <code class="docutils literal notranslate"><span class="pre">Hadoop</span></code> versión 3.2.4-bin-hadoop2.7
-Sí no tienes una versión del <code class="docutils literal notranslate"><span class="pre">JDK</span> <span class="pre">instalada</span></code>,<code class="docutils literal notranslate"><span class="pre">Apache</span> <span class="pre">Spark</span></code> o <code class="docutils literal notranslate"><span class="pre">Hadoop</span></code>, en el siguiente segmento se mostrarán los pasos para la instalación.</p></li>
+Sí no tienes una versión del <code class="docutils literal notranslate"><span class="pre">JDK</span> <span class="pre">instalada</span></code>,<code class="docutils literal notranslate"><span class="pre">Apache</span> <span class="pre">Spark</span></code> o <code class="docutils literal notranslate"><span class="pre">Hadoop</span></code>, el siguiente segmento mostrará los pasos para la instalación.</p></li>
 </ol>
 <section id="paso-1-instalar-el-jdk-si-no-lo-tiene">
 <h4>Paso 1: Instalar el JDK si no lo tiene<a class="headerlink" href="#paso-1-instalar-el-jdk-si-no-lo-tiene" title="Link to this heading">#</a></h4>
@@ -588,6 +590,11 @@ a veces hay conflicto por la ubicación que propone por defecto la instalación,
 </ul>
 </li>
 </ol>
+<div class="warning admonition">
+<p class="admonition-title">Ojo.</p>
+<p>La configuración de las variables de entorno y el <code class="docutils literal notranslate"><span class="pre">path</span></code> de las variables de entorno <strong>Paso1 punto 6 del manual</strong> se hacen para JAVA_HOME, SPARK_HOME Y HADOOP_HOME, por lo que se describe en detalle para JAVA_HOME como referencia para replicar la configuración en las otras dos variables faltantes.</p>
+<p>A continuación se especifican los pasos para descargar los componentes relacionados con las variables SPARK_HOME y HADOOP_HOME.</p>
+</div>
 </section>
 <section id="paso-2-descargar-el-spark-y-ubicarlo-en-c">
 <h4>Paso 2: Descargar el Spark y ubicarlo en C:\<a class="headerlink" href="#paso-2-descargar-el-spark-y-ubicarlo-en-c" title="Link to this heading">#</a></h4>
@@ -624,28 +631,40 @@ conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </
 </pre></div>
 </div>
 <p>Posteriormente debes activar el entorno creado para localizarte en él y poder hacer las instalaciones requeridas:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Activando el entorno creado para proceder con la instalación de R</span>
-conda<span class="w"> </span>activate<span class="w"> </span>Pyspark
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Activando el entorno creado para proceder con la instalación de Pyspark</span>
+conda<span class="w"> </span>activate<span class="w"> </span>Pyspark<span class="w">    </span><span class="c1"># Pyspark con la P en mayúscula corresponde al nombre escogido para el ambiente que se va a confifurar para instalar la libreria pyspark </span>
 </pre></div>
 </div>
 <p><strong>Segundo instalar pyspark</strong>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Instalar PySpark con conda</span>
-conda<span class="w"> </span>install<span class="w"> </span>pyspark
+conda<span class="w"> </span>install<span class="w"> </span>pyspark<span class="w">    </span><span class="c1"># pyspark en minúscula corresponde a la libreria</span>
 </pre></div>
 </div>
 <p><strong>Y después instalar findspark</strong>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Instalar Findspark con conda</span>
-conda<span class="w"> </span>install<span class="w"> </span>findspark
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Instalar Findspark con pip en el prompt de anaconda</span>
+pip<span class="w"> </span>install<span class="w"> </span>findspark
+</pre></div>
+</div>
+<p><strong>se procede a instalar la versión de python 3.10 que es compatible con los componentes de Spark y Hadoop escogidos</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Instalar python 3.10 en el prompt de anaconda</span>
+conda<span class="w"> </span>install<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10
+</pre></div>
+</div>
+<p><strong>Finalmente se instala jupyter lab en el <code class="docutils literal notranslate"><span class="pre">env</span></code> de Pyspark</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Instalar python 3.10 en el prompt de anaconda</span>
+conda<span class="w"> </span>install<span class="w"> </span>jupyterlab
 </pre></div>
 </div>
 <div class="tip admonition">
 <p class="admonition-title">Tip</p>
-<p>O también está la posibilidad de crear el entorno <code class="docutils literal notranslate"><span class="pre">Pyspark</span></code> con la primera letra en mayúscula para diferenciarlo de la librería pyspark y en el mismo comando instalar pyspark y findspark y una versión de python <code class="docutils literal notranslate"><span class="pre">3.10</span></code> menor para mejorar la compatibilidad con la versión de Apache spark 3.2.6</p>
-</div>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>Pyspark<span class="w"> </span>pyspark<span class="w"> </span>findspark<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10<span class="w"> </span><span class="c1"># Crea el entorno de Pyspark e instala findspark y pyspark y python 3.10</span>
-conda<span class="w"> </span>activate<span class="w"> </span>Pyspark<span class="w">                                </span><span class="c1"># Activar el entorno Pyspark</span>
-jupyter<span class="w"> </span>lab<span class="w">                                           </span><span class="c1"># para ejecutar el notebook de jupyter lab</span>
-</pre></div>
+<p>Es muy importante tener presente que cada <code class="docutils literal notranslate"><span class="pre">env</span></code> ambiente instalado es como una cápsula aislada que te permite configurar un conjunto específico de herramientas, librerías y versiones de Python o R para un proyecto determinado</p>
+<p><strong>¿Qué puedes configurar en un entorno?</strong></p>
+<ul class="simple">
+<li><p>Versión de Python o R (por ejemplo, Python 3.8 para compatibilidad con ciertas librerías)</p></li>
+<li><p>Librerías específicas como numpy, pandas, matplotlib, scikit-learn, etc.</p></li>
+<li><p>Variables de entorno o configuraciones personalizadas</p></li>
+<li><p>Dependencias exactas para un proyecto (útil para compartir con estudiantes o colaboradores)</p></li>
+</ul>
 </div>
 <p><em>Se han listado las dos bibliotecas necesarias para que funcione Pyspark, puedes instalar las librerías que sean requeridas para trabajar otros temas</em>.</p>
 </section>
@@ -774,6 +793,7 @@ jupyter<span class="w"> </span>lab<span class="w">                              
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Configurando un entorno de código abierto para procesar datos</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instrucciones">Instrucciones.</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-de-miniconda-y-python">Instalación de miniconda y python.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-de-python-instalacion-python">Instalación de python {#instalacion-python}</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-de-r-en-jupyter-lab-desde-anaconda-prompt">Instalación de R en jupyter lab desde anaconda prompt</a></li>
 </ul>
 </li>
