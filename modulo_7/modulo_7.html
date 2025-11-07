@@ -61,6 +61,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'modulo_7/modulo_7';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Primeros pasos con pyspark" href="../modulo_8/modulo_8.html" />
     <link rel="prev" title="Elaboración de mapas interactivos" href="../modulo_6/modulo_6.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -195,6 +196,9 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Big Data con Python</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Configurando un entorno de código abierto para procesar datos</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../modulo_8/modulo_8.html">Primeros pasos con pyspark</a></li>
+
 
 </ul>
 
@@ -670,11 +674,21 @@ conda<span class="w"> </span>install<span class="w"> </span>jupyterlab
 </section>
 <section id="paso-5-configurar-en-un-ide-la-conexion-de-spark-con-pyspark">
 <h4>Paso 5: Configurar en un IDE la conexión de Spark con pyspark<a class="headerlink" href="#paso-5-configurar-en-un-ide-la-conexion-de-spark-con-pyspark" title="Link to this heading">#</a></h4>
-<p>Se debe abrir jupyter lab desde el <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">Prompt</span></code> desde el entorno de Pyspark con la instrucción.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>jupyter<span class="w"> </span>lab
+<p>Se debe abrir jupyter lab desde el <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">Prompt</span></code> desde el entorno de <code class="docutils literal notranslate"><span class="pre">Pyspark</span></code> con la instrucción.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sentencia para abrir jupyter lab desde el prompt de anaconda</span>
+jupyter<span class="w"> </span>lab
 </pre></div>
 </div>
-<p>Una vez escojas python como kernel ejecuta el siguiente código:</p>
+<div class="warning admonition">
+<p class="admonition-title">Solución a posible contratiempo!</p>
+<p>Es posible que al ejecutar la sentencia anterior <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">lab</span></code> cuando despliegue el notebook en el navegador no cargue y aparezca un mensaje de error (<em>si el notebook les carga correctamente, continuar con la creación de la sesión de spark</em>), si eso ocurre deben volver al prompt de anaconda, buscar, copiar la siguiente url que les genera la ejecución del comando <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">lab</span></code>; es la siguiente:</p>
+</div>
+<a class="reference internal image-reference" href="../_images/url.png"><img alt="numpy" class="align-center" src="../_images/url.png" style="width: 700px;" />
+</a>
+<p>y pegar la url copiada en el navegador de su preferencia.</p>
+<a class="reference internal image-reference" href="../_images/escojekernel.png"><img alt="numpy" class="align-center" src="../_images/escojekernel.png" style="width: 700px;" />
+</a>
+<p>Después de escojer python como kernel, copia, pega y ejecuta el siguiente script para crear la sesión de spark:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">findspark</span>                              <span class="c1"># Importa la librería para localizar Spark en el sistema</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>                                     <span class="c1"># Importa el módulo para interactuar con el sistema operativo</span>
 <span class="n">findspark</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>                              <span class="c1"># Inicializa findspark para que Python encuentre Spark</span>
@@ -684,6 +698,10 @@ conda<span class="w"> </span>install<span class="w"> </span>jupyterlab
 <span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>   <span class="c1"># Crea o recupera una sesión de Spark existente</span>
 <span class="n">spark</span>                                         <span class="c1"># Muestra información de la sesión de Spark activa</span>
 </pre></div>
+</div>
+<div class="warning admonition">
+<p class="admonition-title">Precaución!</p>
+<p>Puede que al ejecutar el código les aparezca un mensaje emergente solicitando permiso para que pueda operar el Java, si es así deben darle permitir para que puedan abrir la sesión de spark, de lo contrario les saldrá un error en la ejecución.</p>
 </div>
 <p>y sí ejecuta el siguiente resultado:</p>
 <a class="reference internal image-reference" href="../_images/Exec_pyspark.png"><img alt="numpy" class="align-center" src="../_images/Exec_pyspark.png" style="width: 500px;" />
@@ -773,6 +791,15 @@ conda<span class="w"> </span>install<span class="w"> </span>jupyterlab
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Elaboración de mapas interactivos</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="../modulo_8/modulo_8.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Primeros pasos con pyspark</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>

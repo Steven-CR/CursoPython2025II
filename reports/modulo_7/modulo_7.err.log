@@ -36,30 +36,16 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-P(Y=j|X) para j = 0, 1, 2, 3
-
-
-### 2. **Ajuste por Categoría de Referencia**
-Como `statsmodels` usa una categoría base (típicamente la primera), los coeficientes estimados tienen dimensión `(n_vars, n_classes-1)`. La función añade una columna de ceros para la categoría de referencia, resultando en una matriz completa de coeficientes β de dimensión `(n_vars, n_classes)`.
-
-### 3. **Cálculo de Efectos Marginales**
-Para cada observación *i*, variable *k* y categoría *j*, calcula:
-
-**Efecto Marginal = P(Y=j|X_i) × [β_jk - Σ_m P(Y=m|X_i) × β_mk]**
-
-Donde:
-- `P(Y=j|X_i)` es la probabilidad predicha de la categoría *j* para la observación *i*
-- `β_jk` es el coeficiente de la variable *k* en la ecuación de la categoría *j*
-- El término `Σ_m P(Y=m|X_i) × β_mk` es el promedio ponderado de los coeficientes de la variable *k* a través de todas las categorías, usando las probabilidades como pesos
-
-Esta fórmula representa la derivada parcial:
-∂P(Y=j|X)/∂x_k
+```{admonition} Precaución!
+:class: Warning
+Puede que al ejecutar el código les aparezca un mensaje emergente solicitando permiso para que pueda operar el Java, si es así deben darle permitir para que puedan abrir la sesión de spark, de lo contrario les saldrá un error en la ejecución.
+```
 ------------------
 
 
-  [36mCell[39m[36m [39m[32mIn[1][39m[32m, line 10[39m
-[31m    [39m[31m**Efecto Marginal = P(Y=j|X_i) × [β_jk - Σ_m P(Y=m|X_i) × β_mk]**[39m
-                                   ^
-[31mSyntaxError[39m[31m:[39m invalid character '×' (U+00D7)
+  [36mCell[39m[36m [39m[32mIn[1][39m[32m, line 1[39m
+[31m    [39m[31m```{admonition} Precaución![39m
+    ^
+[31mSyntaxError[39m[31m:[39m invalid syntax
 
 
