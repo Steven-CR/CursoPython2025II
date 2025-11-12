@@ -1,0 +1,1191 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Primeros pasos con pyspark &#8212; Análisis y procesamiento de datos con Open Source</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modulo_8/modulo_8';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Configurando un entorno de código abierto para procesar datos" href="../modulo_7/modulo_7.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/Logo_DANE_2024.png" class="logo__image only-light" alt="Análisis y procesamiento de datos con Open Source - Home"/>
+    <script>document.write(`<img src="../_static/Logo_DANE_2024.png" class="logo__image only-dark" alt="Análisis y procesamiento de datos con Open Source - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Taller de Análisis y procesamiento de datos con Open Source
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Bienvenida</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../modulo_0/modulo_0.html">Presentación del curso</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Introducción a Python y R</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../modulo_1/modulo_1.html">Entornos de desarrollo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modulo_2/modulo_2.html">Un primer código en Python y R</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modulo_3/modulo_3.html">Manipulación de datos con numpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modulo_4/modulo_4.html">Manipulación de datos con pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modulo_5/modulo_5.html">Visualización de datos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modulo_6/modulo_6.html">Elaboración de mapas interactivos</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Big Data con Python</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../modulo_7/modulo_7.html">Configurando un entorno de código abierto para procesar datos</a></li>
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Primeros pasos con pyspark</a></li>
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/modulo_8/modulo_8.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Primeros pasos con pyspark</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Primeros pasos con pyspark</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parentesis">Paréntesis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observaciones">Observaciones</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recomendacion">Recomendación</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#spark"><strong>Spark</strong>:</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#que-es-pyspark">¿Qué es PySpark?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#para-que-se-utiliza-pyspark">¿Para qué se utiliza PySpark?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#por-que-aprender-pyspark">¿Por qué aprender PySpark?</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#funcionamiento-de-pyspark">Funcionamiento de pyspark</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arquitectura-de-funcionamiento">Arquitectura de funcionamiento:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ecosistema-de-spark">Ecosistema de spark</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estructura-de-un-cluster-spark">Estructura de un Clúster Spark</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#que-es-un-cluster">¿Qué es un clúster?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quien-hace-que-en-el-cluster">¿Quién hace qué en el clúster?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#que-pasa-cuando-ejecutas-tu-codigo">¿Qué pasa cuando ejecutas tu código?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejecuccion">Ejecucción</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuracion-del-controlador-driver">Configuración del controlador <code class="docutils literal notranslate"><span class="pre">Driver</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explorando-spark-mas-alla-del-codigo-la-interfaz-web-ui">Explorando Spark más allá del código: la interfaz Web UI</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pestana-jobs-en-la-web-ui-de-spark">Pestaña <code class="docutils literal notranslate"><span class="pre">Jobs</span></code> en la Web UI de Spark</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pestana-stage-en-la-web-ui-de-spark">Pestaña <code class="docutils literal notranslate"><span class="pre">Stage</span></code> en la Web UI de Spark</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pestana-storage-en-la-web-ui-de-spark">Pestaña <code class="docutils literal notranslate"><span class="pre">Storage</span></code> en la Web UI de Spark</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pestana-environment-en-la-web-ui-de-spark">Pestaña <code class="docutils literal notranslate"><span class="pre">Environment</span></code> en la Web UI de Spark</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pestana-executors-en-la-web-ui-de-spark">Pestaña <code class="docutils literal notranslate"><span class="pre">Executors</span></code> en la Web UI de Spark</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pestana-sql-en-la-web-ui-de-spark">Pestaña <code class="docutils literal notranslate"><span class="pre">SQL</span></code> en la Web UI de Spark</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoreo-inteligente">Monitoreo inteligente.</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="primeros-pasos-con-pyspark">
+<h1>Primeros pasos con pyspark<a class="headerlink" href="#primeros-pasos-con-pyspark" title="Link to this heading">#</a></h1>
+<div class="tip admonition">
+<p class="admonition-title">¿Por qué Spark?</p>
+<p>Cuando los datos superan la capacidad de tu computador local, necesitas una solución distribuida. Spark permite procesar petabytes de datos de forma rápida y escalable.</p>
+</div>
+<section id="parentesis">
+<h2>Paréntesis<a class="headerlink" href="#parentesis" title="Link to this heading">#</a></h2>
+<p>Antes de mostrar la operatividad de Pyspark es importante ver el panorama completo, hay librerias que tienen la capacidad de trabajar con un mayor volumen de datos, siendo más potentes que las tradicionales más conocidas <code class="docutils literal notranslate"><span class="pre">pandas</span></code> o <code class="docutils literal notranslate"><span class="pre">dataframe</span> <span class="pre">de</span> <span class="pre">R</span></code>.</p>
+<p>En esta tabla se comparan cuatro herramientas populares para procesamiento de datos en un equipo local, considerando paralelismo, eficiencia y escalabilidad sin necesidad de clústeres distribuidos.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Herramienta</p></th>
+<th class="head"><p>Lenguaje</p></th>
+<th class="head"><p>Paralelismo</p></th>
+<th class="head"><p>Overhead</p></th>
+<th class="head"><p>Memoria</p></th>
+<th class="head"><p>Escalabilidad</p></th>
+<th class="head"><p>Ecosistema</p></th>
+<th class="head"><p>Ideal para</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Polars</strong></p></td>
+<td><p>Python</p></td>
+<td><p>Multihilo</p></td>
+<td><p>Bajo</p></td>
+<td><p>Eficiente</p></td>
+<td><p>Alta</p></td>
+<td><p>En crecimiento</p></td>
+<td><p>Procesos rápidos</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>data.table</strong></p></td>
+<td><p>R</p></td>
+<td><p>Multihilo</p></td>
+<td><p>Bajo</p></td>
+<td><p>Eficiente</p></td>
+<td><p>Alta</p></td>
+<td><p>Maduro en R</p></td>
+<td><p>Procesamiento intensivo</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Dask</strong></p></td>
+<td><p>Python</p></td>
+<td><p>Multinúcleo</p></td>
+<td><p>Medio</p></td>
+<td><p>Moderado</p></td>
+<td><p>Media-Alta</p></td>
+<td><p>Compatible pandas</p></td>
+<td><p>Pipelines escalables</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>PySpark</strong></p></td>
+<td><p>Python</p></td>
+<td><p>Distribuido</p></td>
+<td><p>Alto</p></td>
+<td><p>Elevado</p></td>
+<td><p>Alta (penalización local)</p></td>
+<td><p>Hadoop/Hive/Delta</p></td>
+<td><p>ETL y big data</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="observaciones">
+<h3>Observaciones<a class="headerlink" href="#observaciones" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Polars</strong> y <strong>data.table</strong> sobresalen en eficiencia y velocidad en entornos locales gracias a su bajo overhead y uso optimizado de memoria.</p></li>
+<li><p><strong>Dask</strong> Dask se adapta mejor a entornos donde los datos todavía caben en memoria local, aunque también es flexible al paralelismo</p></li>
+<li><p><strong>PySpark</strong> está diseñado para entornos distribuidos y procesamiento masivo; en modo local puede ser más lento debido al overhead de JVM y SparkSession.</p></li>
+</ul>
+</section>
+<section id="recomendacion">
+<h3>Recomendación<a class="headerlink" href="#recomendacion" title="Link to this heading">#</a></h3>
+<p>Para procesamiento local con datasets grandes pero no masivos:</p>
+<ul class="simple">
+<li><p>Usar <strong>Polars</strong> o <strong>data.table</strong> para máxima eficiencia.</p></li>
+<li><p>Usar <strong>Dask</strong> si se requiere compatibilidad con pandas y escalabilidad futura.</p></li>
+<li><p>Usar <strong>Pyspark</strong> si se requieren procesamientos que demanden un gran volumen de datos, si la ejecución de tareas toma mucho tiempo su sistema de tolerancia a fallos es una virtud para garantizar una ejecución completa.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="spark">
+<h1><strong>Spark</strong>:<a class="headerlink" href="#spark" title="Link to this heading">#</a></h1>
+<p>Apache Spark es un sistema de procesamiento distribuido diseñado para trabajar con grandes volúmenes de datos, ideal para tareas de big data y machine learning. En lugar de procesar todo en un solo equipo, Spark divide las tareas entre varios dispositivos que colaboran entre sí.</p>
+<p>Este marco es más rápido que tecnologías anteriores como Hadoop y ha sido adoptado por empresas como IBM, Amazon y Yahoo. Dominar Spark te permite escalar tus análisis y modelos predictivos, una habilidad clave en el perfil de cualquier científico de datos.</p>
+<section id="que-es-pyspark">
+<h2>¿Qué es PySpark?<a class="headerlink" href="#que-es-pyspark" title="Link to this heading">#</a></h2>
+<p>PySpark es una interfaz para Apache Spark en Python. Con PySpark, puedes escribir comandos tipo Python y SQL para manipular y analizar datos en un entorno de procesamiento distribuido</p>
+<a class="reference internal image-reference" href="../_images/spark_python.png"><img alt="numpy" class="align-center" src="../_images/spark_python.png" style="width: 400px;" />
+</a>
+<p style="text-align: center; font-size: 9px;">
+    <a href="https://www.databricks.com/" title="Fuente">https://databricks.com</a>
+</p></section>
+<section id="para-que-se-utiliza-pyspark">
+<h2>¿Para qué se utiliza PySpark?<a class="headerlink" href="#para-que-se-utiliza-pyspark" title="Link to this heading">#</a></h2>
+<p>La mayoría de los científicos y analistas de datos están familiarizados con Python y lo utilizan para implementar flujos de trabajo de machine learning. PySpark les permite trabajar con un lenguaje familiar en conjuntos de datos distribuidos a gran escala.</p>
+<div class="warning admonition">
+<p class="admonition-title">Atención!</p>
+<p>Apache Spark también se puede utilizar con otros lenguajes de programación de ciencia de datos como R. Si te interesa profundizar más sobre esto te dejo el enlace donde puedes encontrar una hoja de trucos que les sirva de guía como instructivo para la instalación del sparklyr: <a class="reference external" href="https://rstudio.github.io/cheatsheets/sparklyr.pdf">https://rstudio.github.io/cheatsheets/sparklyr.pdf</a></p>
+</div>
+</section>
+<section id="por-que-aprender-pyspark">
+<h2>¿Por qué aprender PySpark?<a class="headerlink" href="#por-que-aprender-pyspark" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Escalabilidad real</strong>: PySpark permite procesar terabytes o petabytes de datos, algo que bibliotecas como Pandas o Dask no pueden manejar eficientemente.</p></li>
+<li><p><strong>Sintaxis familiar</strong>: Si ya conoces Python, aprender PySpark es sencillo gracias a su API intuitiva y bien documentada.</p></li>
+<li><p><strong>Procesamiento distribuido</strong>: Está diseñado para trabajar sobre sistemas distribuidos, lo que lo hace indispensable en entornos empresariales basados en big data.</p></li>
+<li><p><strong>Velocidad y rendimiento</strong>: PySpark supera a Pandas, Dask e incluso Hadoop en velocidad, y permite procesamiento en tiempo real.</p></li>
+<li><p><strong>Tolerancia a fallos</strong>: Su arquitectura permite recuperar datos tras errores, lo que lo hace robusto para producción.</p></li>
+<li><p><strong>Computación en memoria</strong>: Utiliza RAM para acelerar el procesamiento, incluso en equipos sin disco duro o SSD.</p></li>
+<li><p><strong>Comunidad y confiabilidad</strong>: Aunque existen alternativas como PyFlink, Spark tiene mayor trayectoria y soporte comunitario, lo que lo hace más confiable para proyectos a largo plazo.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="funcionamiento-de-pyspark">
+<h1>Funcionamiento de pyspark<a class="headerlink" href="#funcionamiento-de-pyspark" title="Link to this heading">#</a></h1>
+<section id="arquitectura-de-funcionamiento">
+<h2>Arquitectura de funcionamiento:<a class="headerlink" href="#arquitectura-de-funcionamiento" title="Link to this heading">#</a></h2>
+<p>Antes de incursionar en la mecánica de pyspark es muy importante entender la arquitectura que lo soporta, las principales configuraciones que permite que este framework funcione.</p>
+<a class="reference internal image-reference" href="../_images/database.png"><img alt="numpy" class="align-center" src="../_images/database.png" style="width: 80px;" />
+</a>
+<p style="text-align: center; font-size: 9px;">
+    <a href="https://www.flaticon.com/search/2?word=clusters" title="Fuente">Flaticon</a>
+</p>
+<p><strong>Escalamiento vertical</strong>: esta opción se da más en la modalidad de un servidor, se caracteriza por;</p>
+<ul class="simple">
+<li><p>Mejorar los componentes de un único servidor añadiendo más recursos físicos como CPU (procesamiento), RAM (Memoria) o almacenamiento (HDD o SDD).</p></li>
+<li><p>En algunas situaciones puede requerir una unidad de red si el servidor necesita comunicarse con otros sistemas, acceder a bases de datos remotas o manejar tráfico externo, pero no es el núcleo del escalamiento vertical.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/computer_networks_1.png"><img alt="numpy" class="align-center" src="../_images/computer_networks_1.png" style="width: 80px;" />
+</a>
+<p style="text-align: center; font-size: 9px;">
+    <a href="https://www.flaticon.com/search/2?word=clusters" title="Fuente">Flaticon</a>
+</p>
+<p><strong>Escalamiento horizontal</strong>: este escalamiento es más «casero»</p>
+<ul class="simple">
+<li><p>Es más sencillo de construir, puede utilizarse nodos o computadores de escritorio unidos por una red (router) y un dispositivo de almacenamiento centralizado (NAS).</p></li>
+<li><p>Sí se requiere mayor procesamiento se pueden anexar a la red más computadores de escritorio.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/computer_1.png"><img alt="numpy" class="align-center" src="../_images/computer_1.png" style="width: 80px;" />
+</a>
+<p style="text-align: center; font-size: 9px;">
+    <a href="https://www.flaticon.com/search/2?word=clusters" title="Fuente">Flaticon</a>
+</p>
+<p><strong>Pc o Equipo local</strong>:</p>
+<ul class="simple">
+<li><p>Un pc de escritorio o portail con varios nucleos de procesamiento (hilos), memoria RAM, almacenamiento para lectura y escritura de datos (SSD o HDD)</p></li>
+</ul>
+</section>
+<section id="ecosistema-de-spark">
+<h2>Ecosistema de spark<a class="headerlink" href="#ecosistema-de-spark" title="Link to this heading">#</a></h2>
+<a class="reference internal image-reference" href="../_images/Sparkgraph.png"><img alt="numpy" class="align-center" src="../_images/Sparkgraph.png" style="width: 350px;" />
+</a>
+<p style="text-align: center; font-size: 9px;">
+    Elaboración propia</a>
+</p>
+<p><strong>¿Qué es el ecosistema de Apache Spark?</strong>: Es un conjunto de herramientas que trabajan juntas para procesar grandes volúmenes de datos de forma rápida y eficiente. Aunque Spark se usa mucho en entornos técnicos, aquí te explico sus partes principales con ejemplos sencillos:</p>
+<ul class="simple">
+<li><p><strong>Spark SQL y DataFrames</strong>:
+Sirve para trabajar con datos organizados en forma de tablas, como si fueran hojas de cálculo. Ejemplo: Si tienes una lista de encuestas con nombres, edades y respuestas, Spark SQL te permite filtrar, ordenar o buscar información fácilmente.</p></li>
+<li><p><strong>Spark Streaming</strong>:
+Procesa datos en tiempo real, es decir, mientras se están generando. Ejemplo: Si estás monitoreando sensores de temperatura en diferentes regiones, Spark Streaming puede detectar cambios importantes al instante.</p></li>
+<li><p><strong>MLlib (Machine Learning Library)</strong>:
+Es una biblioteca que permite crear modelos de predicción o clasificación. Ejemplo: Puedes entrenar un modelo para predecir si una persona responderá una encuesta completa según su edad y ubicación.</p></li>
+<li><p><strong>GraphX</strong>:
+Ayuda a analizar relaciones entre elementos, como si fueran redes o mapas de conexiones. Ejemplo: Si quieres entender cómo se conectan diferentes comunidades en una red social, GraphX te ayuda a visualizar y analizar esas relaciones.</p></li>
+</ul>
+<div class="warning admonition">
+<p class="admonition-title">Atención!</p>
+<p>Antes se usaba una técnica llamada RDDs para programar directamente en Spark, pero hoy en día se considera antigua. Las herramientas modernas como DataFrames y Datasets son más fáciles de usar y mucho más eficientes.</p>
+</div>
+</section>
+<section id="estructura-de-un-cluster-spark">
+<h2>Estructura de un Clúster Spark<a class="headerlink" href="#estructura-de-un-cluster-spark" title="Link to this heading">#</a></h2>
+<section id="que-es-un-cluster">
+<h3>¿Qué es un clúster?<a class="headerlink" href="#que-es-un-cluster" title="Link to this heading">#</a></h3>
+<p>Un clúster es un grupo de computadoras que trabajan juntas como si fueran un solo equipo para procesar grandes cantidades de datos rápidamente. Spark organiza este equipo en roles específicos.</p>
+</section>
+<section id="quien-hace-que-en-el-cluster">
+<h3>¿Quién hace qué en el clúster?<a class="headerlink" href="#quien-hace-que-en-el-cluster" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Rol en el clúster</p></th>
+<th class="head"><p>¿Qué hace?</p></th>
+<th class="head"><p>Ejemplo cotidiano</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Nodo maestro</strong></p></td>
+<td><p>Es el jefe del equipo. Reparte tareas y decide cómo usar los recursos.</p></td>
+<td><p>Como un coordinador que asigna funciones.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Nodos ejecutores</strong></p></td>
+<td><p>Son los ayudantes que hacen el trabajo pesado. Ejecutan las tareas.</p></td>
+<td><p>Como asistentes que completan las tareas.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Controlador <code class="docutils literal notranslate"><span class="pre">Driver</span></code></strong></p></td>
+<td><p>Es uno de los trabajadores que toma el rol de líder técnico del proyecto.</p></td>
+<td><p>Como un supervisor que traduce instrucciones y coordina acciones.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="que-pasa-cuando-ejecutas-tu-codigo">
+<h3>¿Qué pasa cuando ejecutas tu código?<a class="headerlink" href="#que-pasa-cuando-ejecutas-tu-codigo" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>El <code class="docutils literal notranslate"><span class="pre">Nodo</span> <span class="pre">Maestro</span></code> elige un trabajador y lo convierte en <code class="docutils literal notranslate"><span class="pre">Controlador</span></code> (driver).</p></li>
+<li><p>El Controlador:</p>
+<ul class="simple">
+<li><p><strong>Traduce tu código</strong> (por ejemplo, en Python) a un lenguaje que Spark entiende internamente (<em>bytecode de JVM</em>).</p></li>
+<li><p><strong>Solicita ayudantes</strong> (llamados <code class="docutils literal notranslate"><span class="pre">ejecutores</span></code>) para realizar las tareas.</p></li>
+<li><p><strong>Activa procesos</strong> en los nodos trabajadores para que empiecen a trabajar.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="ejecuccion">
+<h3>Ejecucción<a class="headerlink" href="#ejecuccion" title="Link to this heading">#</a></h3>
+<p>Cuando ejecutamos la creación de la sesión de Spark el Programa del controlador (Driver) crea un contexto, el <code class="docutils literal notranslate"><span class="pre">SparkContext()</span></code>, que es un punto de entrada a la aplicación. Todas las operaciones que se realizan (transformaciones y acciones) son ejecutadas en los nodos ejecutores <code class="docutils literal notranslate"><span class="pre">Workers</span></code>, y los recursos son administrados por el Administrador del Cluster.</p>
+<a class="reference internal image-reference" href="../_images/ejecutores.png"><img alt="numpy" class="align-center" src="../_images/ejecutores.png" style="width: 600px;" />
+</a>
+<p style="text-align: center; font-size: 9px;">
+    Elaboración propia</a>
+</p>
+<ul class="simple">
+<li><p><strong>Programa del Controlador</strong>: proceso principal que ejecuta la función main() de la aplicación. Es el que crea el SparkContext.</p></li>
+<li><p><strong>Nodos Ejecutores</strong>: son todos aquellos nodos que dependen del backend y que se encargan de ejecutar los procesos de los Executors.</p></li>
+<li><p><strong>Executor</strong>: es un proceso iniciado para una aplicación en un nodo Worker. Este proceso ejecuta tareas y mantiene información en memoria (o en disco). Cada aplicación tiene sus propios Executors.</p></li>
+<li><p><strong>SparkContext</strong>: es el punto de entrada principal a la aplicación de Spark. Se puede usar para crear RDDs, acumuladores y variables de transmisión en el clúster.</p></li>
+<li><p><strong>Administrador del Cluster</strong>: el administrador de clúster es un servicio que permite la comunicación del Driver con el backend para adquirir y gestionar los recursos físicos en el clúster. Es el que determina el flujo de información entre los Workers y el SparkContext.</p>
+<ul>
+<li><p><em>Local</em>: esto en realidad no es un gestor de recursos pero había que mencionarlo, ya que podemos utilizar la opción «local» al declarar el nodo máster para indicar a Spark que será tu propio ordenador.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="configuracion-del-controlador-driver">
+<h3>Configuración del controlador <code class="docutils literal notranslate"><span class="pre">Driver</span></code><a class="headerlink" href="#configuracion-del-controlador-driver" title="Link to this heading">#</a></h3>
+<p><strong>Es importante mencionar que la configuración del controlador funciona sobre la base del JVM y el Spark</strong>
+<em>Ejemplo en Colab</em>;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># EJECUTAR EN COLAB</span>
+<span class="err">!</span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">openjdk</span><span class="o">-</span><span class="mi">8</span><span class="o">-</span><span class="n">jdk</span><span class="o">-</span><span class="n">headless</span> <span class="o">-</span><span class="n">qq</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>  <span class="c1"># Instala Java 8 silenciosamente (requerido para Spark)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>  <span class="c1"># Importa módulo para interactuar con el sistema operativo</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;JAVA_HOME&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;/usr/lib/jvm/java-8-openjdk-amd64&quot;</span>  <span class="c1"># Define variable de entorno con ruta de Java</span>
+<span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">pyspark</span>  <span class="c1"># Instala la librería PySpark desde PyPI</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pyspark</span>  <span class="c1"># Importa PySpark para usar Apache Spark en Python</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyspark.sql</span><span class="w"> </span><span class="kn">import</span> <span class="n">SparkSession</span>   <span class="c1"># Importa la clase SparkSession del módulo pyspark.sql, que es el punto de entrada para trabajar con Spark</span>
+
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span> \  <span class="c1"># Crea una instancia de SparkSession usando el patrón builder (constructor)</span>
+    <span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;MyColabApp&quot;</span><span class="p">)</span> \  <span class="c1"># Define el nombre de la aplicación Spark como &quot;MyColabApp&quot; (útil para identificarla en la UI de Spark)</span>
+    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">&quot;spark.driver.memory&quot;</span><span class="p">,</span> <span class="s2">&quot;4g&quot;</span><span class="p">)</span> \  <span class="c1"># Asigna 4 gigabytes de memoria RAM al driver (proceso principal que coordina la ejecución)</span>
+    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">&quot;spark.executor.memory&quot;</span><span class="p">,</span> <span class="s2">&quot;4g&quot;</span><span class="p">)</span> \  <span class="c1"># Asigna 4 gigabytes de memoria RAM a cada executor (procesos que ejecutan las tareas)</span>
+    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">&quot;spark.sql.adaptive.enabled&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span> \  <span class="c1"># Habilita la ejecución adaptativa de consultas SQL para optimizar el rendimiento automáticamente</span>
+    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">&quot;spark.sql.adaptive.coalescePartitions.enabled&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span> \  <span class="c1"># Permite que Spark combine particiones pequeñas automáticamente para mejorar el rendimiento</span>
+    <span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>  <span class="c1"># Obtiene o crea la sesión de Spark (si ya existe una, la reutiliza; si no, crea una nueva)</span>
+
+<span class="n">sc</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span>  <span class="c1"># Obtiene el SparkContext de la sesión (contexto de bajo nivel para operaciones RDD)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="explorando-spark-mas-alla-del-codigo-la-interfaz-web-ui">
+<h2>Explorando Spark más allá del código: la interfaz Web UI<a class="headerlink" href="#explorando-spark-mas-alla-del-codigo-la-interfaz-web-ui" title="Link to this heading">#</a></h2>
+<p>Una vez creada la sesión de Spark con SparkSession, no solo tenemos acceso a la API de PySpark para manipular datos, sino también a una herramienta visual: la Spark Web UI.</p>
+<p>Esta interfaz web es como el “panel de control” de Spark. Nos permite observar en tiempo real cómo se ejecutan nuestras tareas, cuánta memoria se está utilizando, cuántas particiones se han creado, y cómo se distribuyen los trabajos entre los distintos ejecutores. Es especialmente útil para:</p>
+<ul class="simple">
+<li><p>Monitorear el rendimiento de nuestras transformaciones y acciones.</p></li>
+<li><p>Diagnosticar cuellos de botella o tareas que tardan más de lo esperado.</p></li>
+<li><p>Comprender la arquitectura distribuida de Spark mediante visualizaciones de etapas y tareas.</p></li>
+</ul>
+<div class="warning admonition">
+<p class="admonition-title">Atención!</p>
+<p>En entornos como Colab, esta interfaz no está disponible directamente, ya que Spark se ejecuta en una máquina virtual sin acceso a puertos web. Sin embargo, si trabajas en tu máquina local o en un clúster real (por ejemplo, con Databricks, EMR o Spark en Kubernetes), puedes acceder a la Web UI desde un navegador.</p>
+</div>
+<section id="pestana-jobs-en-la-web-ui-de-spark">
+<h3>Pestaña <code class="docutils literal notranslate"><span class="pre">Jobs</span></code> en la Web UI de Spark<a class="headerlink" href="#pestana-jobs-en-la-web-ui-de-spark" title="Link to this heading">#</a></h3>
+<p>La pestaña Jobs en la interfaz web de Spark ofrece una vista general de todos los trabajos ejecutados por tu aplicación Spark. Es una herramienta clave para entender cómo se distribuyen y ejecutan las tareas en el clúster.</p>
+<p>¿Qué muestra esta pestaña?</p>
+<ul class="simple">
+<li><p>Una página resumen con información de alto nivel: estado, duración, progreso y línea de tiempo de eventos.</p></li>
+<li><p>Una página de detalles para cada trabajo, con visualizaciones del DAG (grafo acíclico dirigido), etapas del trabajo y eventos asociados.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/sparkjobs.png"><img alt="numpy" class="align-center" src="../_images/sparkjobs.png" style="width: 830px;" />
+</a>
+<p style="text-align: center; font-size: 9px;">
+    Elaboración propia</a>
+</p>
+<ul class="simple">
+<li><p>Línea de tiempo muestra cronológicamente el orden de los eventos relacionados con los ejecutores y los trabajos <code class="docutils literal notranslate"><span class="pre">Jobs</span></code> que son un conjunto de tareas que procesan los ejecutores <code class="docutils literal notranslate"><span class="pre">workers</span></code></p></li>
+</ul>
+<div class="tip admonition">
+<p class="admonition-title">¿Por qué es útil la pestaña de Jobs?</p>
+<ul class="simple">
+<li><p>Identificar cuellos de botella o trabajos fallidos.</p></li>
+<li><p>Visualizar cómo Spark divide las tareas en etapas.</p></li>
+<li><p>Comprender el flujo de ejecución mediante el DAG.</p></li>
+</ul>
+</div>
+<p>Detalles de los trabajos agrupados por estado: Muestra información detallada de los trabajos, incluyendo ID del trabajo, descripción (con un enlace a la página detallada del trabajo), hora de envío, duración, resumen de etapas y barra de progreso de tareas.</p>
+<a class="reference internal image-reference" href="../_images/sparkjobs2.png"><img alt="numpy" class="align-center" src="../_images/sparkjobs2.png" style="width: 830px;" />
+</a>
+<p style="text-align: center; font-size: 9px;">
+    Elaboración propia</a>
+</p><p>Cuando haces click en uno de los <code class="docutils literal notranslate"><span class="pre">Jobs</span></code> puedes ver su información en detalle</p>
+<p>Detalles de <code class="docutils literal notranslate"><span class="pre">Jobs</span></code>
+Muestra la información de un trabajo específico identificado por su ID, en este ejemplo es el 32.</p>
+<ul class="simple">
+<li><p>Estado del trabajo: (en ejecución, exitoso, fallido)</p></li>
+<li><p>Número de etapas por estado: (activas, pendientes, completadas, omitidas, fallidas)</p></li>
+<li><p>Consulta SQL asociada: Enlace a la pestaña de SQL para este trabajo</p></li>
+<li><p>Línea de tiempo de eventos: Muestra en orden cronológico los eventos relacionados con los ejecutores (agregados, eliminados) y las etapas del trabajo.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/sparkjobs3.png"><img alt="numpy" class="align-center" src="../_images/sparkjobs3.png" style="width: 830px;" />
+</a>
+<p style="text-align: center; font-size: 9px;">
+    Elaboración propia</a>
+</p><p><strong>Visualización del DAG</strong>: Representación gráfica del grafo acíclico dirigido de este trabajo, donde los vértices representan los RDD o DataFrames y las aristas representan las operaciones a aplicar sobre los RDD.</p>
+<a class="reference internal image-reference" href="../_images/sparkjobs4.png"><img alt="numpy" class="align-center" src="../_images/sparkjobs4.png" style="width: 500px;" />
+</a>
+<p style="text-align: center; font-size: 9px;">
+    Elaboración propia</a>
+</p>
+<p><strong>Análisis del DAG</strong>:
+Este DAG muestra una operación típica de agregación con shuffle en Spark. Aquí está lo que está sucediendo:</p>
+<p><strong>Stage 45 (Skipped - Gris)</strong>:</p>
+<ul class="simple">
+<li><p>WholeStageCodegen (1): Generación de código optimizado para la lectura inicial</p></li>
+<li><p>Exchange: Operación de shuffle (redistribución de datos entre particiones)</p></li>
+<li><p>Está “skipped” porque probablemente ya se ejecutó y los datos están en cache</p></li>
+</ul>
+<p><strong>Stage 46 (Activo - Azul)</strong>:</p>
+<ol class="arabic simple">
+<li><p>AQEShuffleRead: Lectura adaptativa de los datos después del shuffle (Adaptive Query Execution)</p></li>
+<li><p>WholeStageCodegen (2): Segunda fase de generación de código optimizado</p></li>
+<li><p>map: Transformación de los datos</p></li>
+<li><p>takeOrdered: Ordenamiento y toma de resultados finales</p></li>
+</ol>
+</section>
+<section id="pestana-stage-en-la-web-ui-de-spark">
+<h3>Pestaña <code class="docutils literal notranslate"><span class="pre">Stage</span></code> en la Web UI de Spark<a class="headerlink" href="#pestana-stage-en-la-web-ui-de-spark" title="Link to this heading">#</a></h3>
+<p>A continuación se explica cada componente de la tabla de etapas <code class="docutils literal notranslate"><span class="pre">Stages</span></code> (agrupadas por estado: activas, pendientes, completadas, omitidas y fallidas)</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Stage</span> <span class="pre">ID</span></code> -&gt; ID de la etapa.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Description</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">stage</span></code> -&gt; Descripción de la etapa.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Submitted</span> <span class="pre">timestamp</span></code> -&gt; Marca de tiempo de envío.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Duration</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">stage</span></code> -&gt; Duración de la etapa.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Tasks</span> <span class="pre">progress</span> <span class="pre">bar</span></code> -&gt; Barra de progreso de tareas.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Input</span></code>: Bytes leídos del almacenamiento en esta etapa.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Output</span></code>: Bytes escritos en el almacenamiento en esta etapa.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Shuffle</span> <span class="pre">read</span></code>: Bytes y registros totales leídos, incluye tanto datos leídos localmente como datos leídos de ejecutores remotos.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Shuffle</span> <span class="pre">write</span></code>: Bytes y registros escritos en disco para ser leídos por un shuffle en una etapa futura.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/sparkjobs5.png"><img alt="numpy" class="align-center" src="../_images/sparkjobs5.png" style="width: 840px;" />
+</a>
+<p style="text-align: center; font-size: 9px;">
+    Elaboración propia</a>
+</p><p>También se puede ver los detalle de cada <code class="docutils literal notranslate"><span class="pre">Stage</span></code> haciendo click en detalle, como se muestra en la siguiente imagen, ahí podras ver lo que ocurre en el <code class="docutils literal notranslate"><span class="pre">JVM</span></code> que es la capa de comunicación entre <code class="docutils literal notranslate"><span class="pre">python</span></code> y <code class="docutils literal notranslate"><span class="pre">spark</span></code></p>
+<a class="reference internal image-reference" href="../_images/sparkjobs6.png"><img alt="numpy" class="align-center" src="../_images/sparkjobs6.png" style="width: 840px;" />
+</a>
+<p style="text-align: center; font-size: 9px;">
+    Elaboración propia</a>
+</p>
+<p>Este stage representa la fase final de materialización de la operación, donde:</p>
+<ul class="simple">
+<li><p>Lee 56.4 KiB del shuffle anterior (datos ya agregados/procesados)</p></li>
+<li><p>Procesa 1 sola tarea (porque solo necesita generar la salida final)</p></li>
+<li><p>Dura 4 segundos (incluye formateo y envío al driver)</p></li>
+<li><p>No escribe shuffle porque es el último paso antes de mostrar la tabla</p></li>
+</ul>
+<p>Es tipico de operaciones como:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="s2">&quot;categoria&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+   <span class="err">↓</span>
+   <span class="n">SHUFFLE</span> <span class="n">WRITE</span> <span class="p">(</span><span class="n">Stage</span> <span class="mi">45</span><span class="p">)</span>
+   <span class="err">↓</span>
+   <span class="p">[</span><span class="n">Datos</span> <span class="n">redistribuidos</span> <span class="n">por</span> <span class="n">red</span><span class="p">]</span>
+   <span class="err">↓</span>
+   <span class="n">SHUFFLE</span> <span class="n">READ</span> <span class="p">(</span><span class="n">Stage</span> <span class="mi">46</span><span class="p">)</span> <span class="err">→</span> <span class="mf">56.4</span> <span class="n">KiB</span> <span class="n">leídos</span>
+</pre></div>
+</div>
+<p>Sí ingresas haciendo click en el nombre de la descripción vas a obtener un gráfico DAG que va a mostrar detalles de la etapa:</p>
+<a class="reference internal image-reference" href="../_images/sparkjobs7.png"><img alt="numpy" class="align-center" src="../_images/sparkjobs7.png" style="width: 600px;" />
+</a>
+<p style="text-align: center; font-size: 9px;">
+    Elaboración propia</a>
+</p><p><strong>Análisis del DAG mostrado</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>AQEShuffleRead</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p>RDD: <code class="docutils literal notranslate"><span class="pre">ShuffledRowRDD</span> <span class="pre">[149]</span></code></p></li>
+<li><p>Etiqueta: <code class="docutils literal notranslate"><span class="pre">[Unordered]</span></code> (Lectura de shuffle no ordenada)</p></li>
+<li><p>Origen del código: <code class="docutils literal notranslate"><span class="pre">showString</span> <span class="pre">at</span> <span class="pre">NativeMethodAccessorImpl.java:0</span></code></p></li>
+<li><p>Significado: Esta es la operación de lectura de shuffle que probablemente utiliza Adaptive Query Execution (AQE) de Spark para optimizar la lectura de datos redistribuidos.</p></li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p><strong>WholeStageCodegen</strong> <code class="docutils literal notranslate"><span class="pre">(2)</span></code></p></li>
+</ol>
+<ul class="simple">
+<li><p>RDD: <code class="docutils literal notranslate"><span class="pre">MapPartitionsRDD</span> <span class="pre">[150]</span></code></p></li>
+<li><p>Etiqueta: <code class="docutils literal notranslate"><span class="pre">[Unordered]</span></code></p></li>
+<li><p>Origen del código: <code class="docutils literal notranslate"><span class="pre">showString</span> <span class="pre">at</span> <span class="pre">NativeMethodAccessorImpl.java:0</span></code></p></li>
+<li><p>Significado: Esta es una etapa completa de generación de código (optimización de Spark que compila múltiples operaciones en una sola función para mejor rendimiento). El “(2)” probablemente indica el ID de generación de código.</p></li>
+</ul>
+<ol class="arabic simple" start="3">
+<li><p><strong>MapPartitionsRDD</strong> <code class="docutils literal notranslate"><span class="pre">[151]</span></code></p></li>
+</ol>
+<ul class="simple">
+<li><p>Tipo: Operación de transformación sobre particiones</p></li>
+<li><p>Etiqueta: <code class="docutils literal notranslate"><span class="pre">[Unordered]</span></code></p></li>
+<li><p>Significado: Aplica una función a cada partición del RDD anterior.</p></li>
+</ul>
+<ol class="arabic simple" start="4">
+<li><p><strong>takeOrdered</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p>RDD: <code class="docutils literal notranslate"><span class="pre">MapPartitionsRDD</span> <span class="pre">[152]</span></code></p></li>
+<li><p>Etiqueta: <code class="docutils literal notranslate"><span class="pre">[Unordered]</span></code></p></li>
+<li><p>Significado: Esta es la operación final que toma los elementos ordenados para mostrar el resultado.</p></li>
+</ul>
+<div class="admonition-flujo-de-ejecucion admonition">
+<p class="admonition-title">Flujo de ejecución</p>
+<p>El DAG representa una operación que:</p>
+<ol class="arabic simple">
+<li><p>Lee datos redistribuidos vía shuffle</p></li>
+<li><p>Procesa los datos con optimizaciones de código</p></li>
+<li><p>Transforma los datos mediante mapeo</p></li>
+<li><p>Finalmente toma un número limitado de elementos ordenados</p></li>
+</ol>
+</div>
+</section>
+<section id="pestana-storage-en-la-web-ui-de-spark">
+<h3>Pestaña <code class="docutils literal notranslate"><span class="pre">Storage</span></code> en la Web UI de Spark<a class="headerlink" href="#pestana-storage-en-la-web-ui-de-spark" title="Link to this heading">#</a></h3>
+<a class="reference internal image-reference" href="../_images/sparkjobs8.png"><img alt="numpy" class="align-center" src="../_images/sparkjobs8.png" style="width: 900px;" />
+</a>
+<p style="text-align: center; font-size: 9px;">
+    Elaboración propia</a>
+</p><p><strong>Métricas de Almacenamiento</strong></p>
+<p><em>La tabla muestra métricas típicas de Storage:</em></p>
+<ul class="simple">
+<li><p><strong>RDD Name:</strong> Describe la composición de la tabla, variables, esquema y formatos de las columnas.</p></li>
+<li><p><strong>Storage Level:</strong> (Disk Memory Deserialized 1x Replicated) lo que quiere decir que los datos están almacenados en Memoria RAM y en Disco, los datos no están centralizados y solo se hizo una copia de los datos.</p></li>
+<li><p><strong>Cached Partitions:</strong> (200) - número de particiones almacenadas.</p></li>
+<li><p><strong>Fraction Cached:</strong> <code class="docutils literal notranslate"><span class="pre">100.0%</span></code> - TODAS las particiones están en caché.</p></li>
+<li><p><strong>Size in Memory:</strong> (377MiB) - tamaño ocupado en memoria RAM.</p></li>
+<li><p><strong>Size on Disk:</strong> (1117.1MiB) - tamaño en disco.</p></li>
+</ul>
+</section>
+<section id="pestana-environment-en-la-web-ui-de-spark">
+<h3>Pestaña <code class="docutils literal notranslate"><span class="pre">Environment</span></code> en la Web UI de Spark<a class="headerlink" href="#pestana-environment-en-la-web-ui-de-spark" title="Link to this heading">#</a></h3>
+<p>La pestaña <strong>Environment</strong> de la interfaz web de Spark muestra la configuración activa del entorno en el que se está ejecutando tu aplicación. Es como abrir el panel de configuración de Spark para ver qué parámetros, versiones y rutas están en uso.</p>
+<a class="reference internal image-reference" href="../_images/sparkjobs9.png"><img alt="numpy" class="align-center" src="../_images/sparkjobs9.png" style="width: 900px;" />
+</a>
+<p style="text-align: center; font-size: 9px;">
+    Elaboración propia</a>
+</p>
+<p><strong>¿Qué información contiene?</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Sección</p></th>
+<th class="head"><p>Descripción</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Runtime Information</strong></p></td>
+<td><p>Versiones de Spark, Java, Scala y Hadoop utilizadas en la sesión actual.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Spark Properties</strong></p></td>
+<td><p>Propiedades de configuración activas, incluyendo las definidas en el código o en archivos externos.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Hadoop Properties</strong></p></td>
+<td><p>Parámetros relacionados con la integración de Spark con Hadoop (si aplica).</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Classpath Entries</strong></p></td>
+<td><p>Rutas de acceso a librerías y recursos que Spark está utilizando.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>System Properties</strong></p></td>
+<td><p>Variables del sistema Java (<code class="docutils literal notranslate"><span class="pre">Dproperty=value</span></code>) que afectan el comportamiento del entorno.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Metrics Properties</strong></p></td>
+<td><p>Configuración para la recopilación de métricas de rendimiento.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Esta pestaña permite verificar configuraciones activas para diagnosticar problemas, replicar entornos y optimizar el rendimiento. Es clave para entender cómo Spark está configurado durante la ejecución.</p>
+</section>
+<section id="pestana-executors-en-la-web-ui-de-spark">
+<h3>Pestaña <code class="docutils literal notranslate"><span class="pre">Executors</span></code> en la Web UI de Spark<a class="headerlink" href="#pestana-executors-en-la-web-ui-de-spark" title="Link to this heading">#</a></h3>
+<a class="reference internal image-reference" href="../_images/sparkjobs10.png"><img alt="numpy" class="align-center" src="../_images/sparkjobs10.png" style="width: 900px;" />
+</a>
+<p style="text-align: center; font-size: 9px;">
+    Elaboración propia</a>
+</p>
+<p>La pestaña <code class="docutils literal notranslate"><span class="pre">Executors</span></code> donde están los ejecutores en la Spark Web UI, proporciona un resumen detallado de cada <em>executor</em> creado para la aplicación. Un <em>executor</em> es un proceso que ejecuta tareas y almacena datos en memoria o disco durante el procesamiento distribuido.</p>
+<p><strong>¿Qué muestra esta pestaña?</strong></p>
+<ul class="simple">
+<li><p>Número total de <em>executors</em> activos e inactivos</p></li>
+<li><p>Uso de memoria y disco por cada <em>executor</em></p></li>
+<li><p>Estadísticas de tareas ejecutadas (completadas, fallidas, en ejecución)</p></li>
+<li><p>Información de <em>shuffle</em> (lecturas/escrituras entre nodos)</p></li>
+<li><p>Estado del <em>driver</em> (si está incluido como executor)</p></li>
+</ul>
+<p><strong>Descripción de columnas</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Columna</p></th>
+<th class="head"><p>Descripción</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Executor ID</strong></p></td>
+<td><p>Identificador único del executor</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Address</strong></p></td>
+<td><p>Dirección IP y puerto del executor</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>RDD Blocks</strong></p></td>
+<td><p>Número de bloques de datos almacenados en memoria</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Storage Memory</strong></p></td>
+<td><p>Memoria usada y reservada para <em>caching</em> de datos</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Disk Used</strong></p></td>
+<td><p>Espacio en disco utilizado por el executor</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Active Tasks</strong></p></td>
+<td><p>Número de tareas actualmente en ejecución</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Failed Tasks</strong></p></td>
+<td><p>Número de tareas que fallaron</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Completed Tasks</strong></p></td>
+<td><p>Número de tareas completadas exitosamente</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Total Tasks</strong></p></td>
+<td><p>Total de tareas asignadas al executor</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Shuffle Read/Write</strong></p></td>
+<td><p>Datos leídos/escritos durante operaciones de <em>shuffle</em></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Logs</strong></p></td>
+<td><p>Enlaces a los registros de salida y error del executor</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition-nota admonition">
+<p class="admonition-title">Nota:</p>
+<p>La columna <strong>Storage Memory</strong> es especialmente útil para identificar cuellos de botella en el <em>caching</em> de datos. Si un executor tiene poca memoria disponible, puede provocar recomputaciones costosas o uso excesivo de disco.</p>
+</div>
+</section>
+<section id="pestana-sql-en-la-web-ui-de-spark">
+<h3>Pestaña <code class="docutils literal notranslate"><span class="pre">SQL</span></code> en la Web UI de Spark<a class="headerlink" href="#pestana-sql-en-la-web-ui-de-spark" title="Link to this heading">#</a></h3>
+<p>La pestaña <strong>SQL</strong> en la Spark Web UI muestra información detallada sobre las consultas SQL ejecutadas en la aplicación. Es especialmente útil cuando se trabaja con Spark SQL o DataFrames que internamente se traducen a operaciones SQL.</p>
+<a class="reference internal image-reference" href="../_images/sparkjobs11.png"><img alt="numpy" class="align-center" src="../_images/sparkjobs11.png" style="width: 900px;" />
+</a>
+<p style="text-align: center; font-size: 9px;">
+    Elaboración propia</a>
+</p>
+<p><strong>¿Qué muestra esta pestaña?</strong></p>
+<ul class="simple">
+<li><p>Lista de consultas SQL ejecutadas</p></li>
+<li><p>Estado de ejecución (en progreso, completada, fallida)</p></li>
+<li><p>Tiempo de inicio y duración de cada consulta</p></li>
+<li><p>Plan lógico y físico de ejecución</p></li>
+<li><p>Métricas de rendimiento como duración, número de filas procesadas, y uso de recursos</p></li>
+</ul>
+<p><strong>Descripción de columnas</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Columna</p></th>
+<th class="head"><p>Descripción</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>ID</strong></p></td>
+<td><p>Identificador único de la consulta SQL</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Description</strong></p></td>
+<td><p>Texto de la consulta SQL ejecutada</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Submitted</strong></p></td>
+<td><p>Hora de inicio de la ejecución</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Duration</strong></p></td>
+<td><p>Tiempo total que tomó ejecutar la consulta</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Job IDs</strong></p></td>
+<td><p>Identificadores de los <em>jobs</em> Spark asociados a la consulta</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<p><strong>Ejemplo visual</strong> si se esta trabajando con lenguaje SQL.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Duration</p></th>
+<th class="head"><p>Status</p></th>
+<th class="head"><p>Job IDs</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>12</p></td>
+<td><p>SELECT * FROM ventas</p></td>
+<td><p>3.2 s</p></td>
+<td><p>Completed</p></td>
+<td><p>[45]</p></td>
+</tr>
+<tr class="row-odd"><td><p>13</p></td>
+<td><p>SELECT COUNT(*) FROM logs</p></td>
+<td><p>1.8 s</p></td>
+<td><p>Completed</p></td>
+<td><p>[46]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<div class="admonition-nota admonition">
+<p class="admonition-title">Nota:</p>
+<p>Si una consulta tarda demasiado, revisa el plan físico para detectar operaciones costosas como shuffles o scans sin filtros. También puedes verificar si hay broadcast joins mal dimensionados.</p>
+</div>
+</section>
+</section>
+<section id="monitoreo-inteligente">
+<h2>Monitoreo inteligente.<a class="headerlink" href="#monitoreo-inteligente" title="Link to this heading">#</a></h2>
+<p>Dominar PySpark no es solo escribir código que funciona, sino entender cómo y por qué funciona. El Spark Web UI es una herramienta visual que revela el comportamiento interno de tus aplicaciones, desde el uso de memoria hasta el rendimiento de cada consulta SQL.</p>
+<p>Aprender a interpretar sus pestañas <strong>Jobs</strong>, <strong>Stages</strong>, <strong>Storage</strong>, <strong>SQL</strong>, <strong>Executors</strong>, te permite:</p>
+<ul class="simple">
+<li><p>Detectar cuellos de botella en tiempo real</p></li>
+<li><p>Optimizar el uso de recursos</p></li>
+<li><p>Identificar tareas fallidas o mal distribuidas</p></li>
+<li><p>Comprender cómo Spark transforma y ejecuta tus instrucciones</p></li>
+</ul>
+<div class="admonition-nota admonition">
+<p class="admonition-title">Nota:</p>
+<p>Monitorear no es corregir después del error: es anticiparse. Un buen monitoreo permite tomar decisiones informadas antes de que los recursos se saturen o los tiempos de ejecución se disparen.</p>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./modulo_8"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../modulo_7/modulo_7.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Configurando un entorno de código abierto para procesar datos</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Primeros pasos con pyspark</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parentesis">Paréntesis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observaciones">Observaciones</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recomendacion">Recomendación</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#spark"><strong>Spark</strong>:</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#que-es-pyspark">¿Qué es PySpark?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#para-que-se-utiliza-pyspark">¿Para qué se utiliza PySpark?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#por-que-aprender-pyspark">¿Por qué aprender PySpark?</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#funcionamiento-de-pyspark">Funcionamiento de pyspark</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arquitectura-de-funcionamiento">Arquitectura de funcionamiento:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ecosistema-de-spark">Ecosistema de spark</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estructura-de-un-cluster-spark">Estructura de un Clúster Spark</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#que-es-un-cluster">¿Qué es un clúster?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quien-hace-que-en-el-cluster">¿Quién hace qué en el clúster?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#que-pasa-cuando-ejecutas-tu-codigo">¿Qué pasa cuando ejecutas tu código?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejecuccion">Ejecucción</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuracion-del-controlador-driver">Configuración del controlador <code class="docutils literal notranslate"><span class="pre">Driver</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explorando-spark-mas-alla-del-codigo-la-interfaz-web-ui">Explorando Spark más allá del código: la interfaz Web UI</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pestana-jobs-en-la-web-ui-de-spark">Pestaña <code class="docutils literal notranslate"><span class="pre">Jobs</span></code> en la Web UI de Spark</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pestana-stage-en-la-web-ui-de-spark">Pestaña <code class="docutils literal notranslate"><span class="pre">Stage</span></code> en la Web UI de Spark</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pestana-storage-en-la-web-ui-de-spark">Pestaña <code class="docutils literal notranslate"><span class="pre">Storage</span></code> en la Web UI de Spark</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pestana-environment-en-la-web-ui-de-spark">Pestaña <code class="docutils literal notranslate"><span class="pre">Environment</span></code> en la Web UI de Spark</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pestana-executors-en-la-web-ui-de-spark">Pestaña <code class="docutils literal notranslate"><span class="pre">Executors</span></code> en la Web UI de Spark</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pestana-sql-en-la-web-ui-de-spark">Pestaña <code class="docutils literal notranslate"><span class="pre">SQL</span></code> en la Web UI de Spark</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoreo-inteligente">Monitoreo inteligente.</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Departamento Administrativo Nacional de Estadística - DANE
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
